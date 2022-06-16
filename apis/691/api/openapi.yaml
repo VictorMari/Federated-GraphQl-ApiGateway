@@ -1,0 +1,1292 @@
+openapi: 3.0.1
+info:
+  description: This is Swagger UI environment generated for the TMF FederatedID specification
+  title: Federated ID
+  version: "4.0"
+servers:
+- url: http://serverRoot/tmf-api/openid/v4
+tags:
+- name: userinfo
+- name: events subscription
+paths:
+  /userinfo:
+    get:
+      description: This operation list or find Userinfo entities
+      operationId: listUserinfo
+      parameters:
+      - description: token to be passed as a header linked to the user whose identity
+          is requested
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Userinfo'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find Userinfo objects
+      tags:
+      - userinfo
+      x-eov-operation-handler: controllers/UserinfoController
+  /userinfo/{id}:
+    get:
+      description: This operation retrieves a Userinfo entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrieveUserinfo
+      parameters:
+      - description: token to be passed as a header linked to the user whose identity
+          is requested
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Identifier of the Userinfo
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Userinfo'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a Userinfo by ID
+      tags:
+      - userinfo
+      x-eov-operation-handler: controllers/UserinfoController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+components:
+  schemas:
+    Addressable:
+      description: Base schema for adressable entities
+      properties:
+        id:
+          description: unique identifier
+          type: string
+        href:
+          description: Hyperlink reference
+          format: uri
+          type: string
+      type: object
+    Attachment:
+      description: "Complements the description of an element (for instance a product)\
+        \ through video, pictures..."
+      properties:
+        id:
+          description: Unique identifier for this particular attachment
+          example: 4aafacbd-11ff-4dc8-b445-305f2215715f
+          type: string
+        href:
+          description: URI for this Attachment
+          example: http://host/Attachment/4aafacbd-11ff-4dc8-b445-305f2215715f
+          format: uri
+          type: string
+        attachmentType:
+          description: "Attachment type such as video, picture"
+          example: video
+          type: string
+        content:
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64"
+          format: base64
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          example: Photograph of the Product
+          type: string
+        mimeType:
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          type: string
+        name:
+          description: The name of the attachment
+          type: string
+        url:
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)"
+          example: http://host/Content/4aafacbd-11ff-4dc8-b445-305f2215715f
+          format: uri
+          type: string
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+      type: object
+    AttachmentRef:
+      description: "Attachment reference. An attachment complements the description\
+        \ of an element (for instance a product) through video, pictures"
+      properties:
+        id:
+          description: Unique-Identifier for this attachment
+          type: string
+        href:
+          description: URL serving as reference for the attachment resource
+          format: uri
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        url:
+          description: Link to the attachment media/content
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    AttachmentRefOrValue:
+      description: "An attachment by value or by reference. An attachment complements\
+        \ the description of an element, for example through a document, a video,\
+        \ a picture."
+      example:
+        '@referredType': '@referredType'
+        attachmentType: video
+        validFor:
+          startDateTime: 1985-04-12T23:20:50.52Z
+          endDateTime: 1985-04-12T23:20:50.52Z
+        '@type': '@type'
+        description: Photograph of the Product
+        mimeType: mimeType
+        content: content
+        url: http://host/Content/4aafacbd-11ff-4dc8-b445-305f2215715f
+        size:
+          amount: 0.8008282
+          units: units
+        '@baseType': '@baseType'
+        name: name
+        id: 4aafacbd-11ff-4dc8-b445-305f2215715f
+        href: http://host/Attachment/4aafacbd-11ff-4dc8-b445-305f2215715f
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier for this particular attachment
+          example: 4aafacbd-11ff-4dc8-b445-305f2215715f
+          type: string
+        href:
+          description: URI for this Attachment
+          example: http://host/Attachment/4aafacbd-11ff-4dc8-b445-305f2215715f
+          format: uri
+          type: string
+        attachmentType:
+          description: "Attachment type such as video, picture"
+          example: video
+          type: string
+        content:
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64"
+          format: base64
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          example: Photograph of the Product
+          type: string
+        mimeType:
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          type: string
+        name:
+          description: The name of the attachment
+          type: string
+        url:
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)"
+          example: http://host/Content/4aafacbd-11ff-4dc8-b445-305f2215715f
+          format: uri
+          type: string
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      type: object
+    Entitlement:
+      description: An Entitlement defines access levels to operate over a given function
+        that can be included in an asset.
+      example:
+        function: function
+        action: action
+        id: id
+      properties:
+        id:
+          description: Identifier of the entitlement.
+          type: string
+        action:
+          description: Level of access granted as part of the permission.
+          type: string
+        function:
+          description: Specific function that can be managed over a given asset.
+          type: string
+      type: object
+    EntityRef:
+      description: Entity reference schema to be use for all entityRef class.
+      properties:
+        id:
+          description: unique identifier
+          type: string
+        href:
+          description: Hyperlink reference
+          format: uri
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    Extensible:
+      description: Base Extensible schema for use in TMForum Open-APIs
+      properties:
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          type: string
+      type: object
+    GeographicAddress:
+      description: "Structured textual way of describing how to find a Property in\
+        \ an urban area (country properties are often defined differently).\nNote\
+        \ : Address corresponds to SID UrbanPropertyAddress"
+      example:
+        country: country
+        streetType: streetType
+        geographicLocation:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        city: city
+        streetNr: streetNr
+        locality: locality
+        postcode: postcode
+        streetNrLast: streetNrLast
+        streetNrSuffix: streetNrSuffix
+        streetName: streetName
+        stateOrProvince: stateOrProvince
+        name: name
+        streetNrLastSuffix: streetNrLastSuffix
+        streetSuffix: streetSuffix
+        geographicSubAddress:
+        - buildingName: buildingName
+          subUnitNumber: subUnitNumber
+          levelType: levelType
+          subUnitType: subUnitType
+          levelNumber: levelNumber
+          name: name
+          subAddressType: subAddressType
+          id: id
+          href: href
+          privateStreetNumber: privateStreetNumber
+          privateStreetName: privateStreetName
+        - buildingName: buildingName
+          subUnitNumber: subUnitNumber
+          levelType: levelType
+          subUnitType: subUnitType
+          levelNumber: levelNumber
+          name: name
+          subAddressType: subAddressType
+          id: id
+          href: href
+          privateStreetNumber: privateStreetNumber
+          privateStreetName: privateStreetName
+        id: id
+        href: href
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        city:
+          description: City that the address is in
+          type: string
+        country:
+          description: Country that the address is in
+          type: string
+        locality:
+          description: "An area of defined or undefined boundaries within a local\
+            \ authority or other legislatively defined area, usually rural or semi\
+            \ rural in nature. [ANZLIC-STREET], or a suburb, a bounded locality within\
+            \ a city, town or shire principally of urban character [ANZLICSTREET]"
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        postcode:
+          description: "descriptor for a postal delivery area, used to speed and simplify\
+            \ the delivery of mail (also know as zipcode)"
+          type: string
+        stateOrProvince:
+          description: the State or Province that the address is in
+          type: string
+        streetName:
+          description: Name of the street or other street type
+          type: string
+        streetNr:
+          description: Number identifying a specific property on a public street.
+            It may be combined with streetNrLast for ranged addresses
+          type: string
+        streetNrLast:
+          description: Last number in a range of street numbers allocated to a property
+          type: string
+        streetNrLastSuffix:
+          description: Last street number suffix for a ranged address
+          type: string
+        streetNrSuffix:
+          description: the first street number suffix
+          type: string
+        streetSuffix:
+          description: A modifier denoting a relative direction
+          type: string
+        streetType:
+          description: "alley, avenue, boulevard, brae, crescent, drive, highway,\
+            \ lane, terrace, parade, place, tarn, way, wharf "
+          type: string
+        geographicLocation:
+          $ref: '#/components/schemas/GeographicLocationRefOrValue'
+        geographicSubAddress:
+          items:
+            $ref: '#/components/schemas/GeographicSubAddress'
+          type: array
+      type: object
+    GeographicLocation:
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute."
+      properties:
+        id:
+          description: Unique identifier of the geographic location
+          type: string
+        href:
+          description: An URI used to access to the geographic location resource
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          type: string
+      required:
+      - '@type'
+      type: object
+    GeographicLocationRef:
+      properties:
+        id:
+          description: unique identifier
+          type: string
+        href:
+          description: Hyperlink reference
+          format: uri
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    GeographicLocationRefOrValue:
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute."
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - '@type'
+      type: object
+    GeographicSubAddress:
+      description: "Representation of a GeographicSubAddress \nIt is used for addressing\
+        \ within a property in an urban area (country properties are often defined\
+        \ differently). It may refer to a building, a building cluster, or a floor\
+        \ of a multistory building."
+      example:
+        buildingName: buildingName
+        subUnitNumber: subUnitNumber
+        levelType: levelType
+        subUnitType: subUnitType
+        levelNumber: levelNumber
+        name: name
+        subAddressType: subAddressType
+        id: id
+        href: href
+        privateStreetNumber: privateStreetNumber
+        privateStreetName: privateStreetName
+      properties:
+        id:
+          description: Unique Identifier of the subAddress
+          type: string
+        href:
+          description: Link to the subAddress
+          type: string
+        buildingName:
+          description: allows for buildings that have well-known names
+          type: string
+        levelNumber:
+          description: "used where a level type may be repeated e.g. BASEMENT 1, BASEMENT\
+            \ 2"
+          type: string
+        levelType:
+          description: describes level types within a building
+          type: string
+        name:
+          description: Name of the subAddress to identify it with a meaningful identification
+          type: string
+        privateStreetName:
+          description: private streets internal to a property (e.g. a university)
+            may have internal names that are not recorded by the land title office.
+          type: string
+        privateStreetNumber:
+          description: private streets numbers internal to a private street
+          type: string
+        subAddressType:
+          description: "Type of subAddress : it can be a subunit or a private street"
+          type: string
+        subUnitNumber:
+          description: "the discriminator used for the subunit\noften just a simple\
+            \ number e.g. FLAT 5, may also be a range"
+          type: string
+        subUnitType:
+          description: "the type of subunit\ne.g.BERTH, FLAT, PIER, SUITE, SHOP, TOWER,\
+            \ UNIT, WHARF"
+          type: string
+      type: object
+    IndividualIdentification:
+      description: "Represents our registration of information used as proof of identity\
+        \ by an individual (passport, national identity card, drivers license, social\
+        \ security number, birth certificate)"
+      example:
+        issuingAuthority: issuingAuthority
+        attachment:
+          '@referredType': '@referredType'
+          attachmentType: video
+          validFor:
+            startDateTime: 1985-04-12T23:20:50.52Z
+            endDateTime: 1985-04-12T23:20:50.52Z
+          '@type': '@type'
+          description: Photograph of the Product
+          mimeType: mimeType
+          content: content
+          url: http://host/Content/4aafacbd-11ff-4dc8-b445-305f2215715f
+          size:
+            amount: 0.8008282
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: 4aafacbd-11ff-4dc8-b445-305f2215715f
+          href: http://host/Attachment/4aafacbd-11ff-4dc8-b445-305f2215715f
+          '@schemaLocation': https://openapi-generator.tech
+        issuingDate: 2000-01-23T04:56:07.000+00:00
+        validFor:
+          startDateTime: 1985-04-12T23:20:50.52Z
+          endDateTime: 1985-04-12T23:20:50.52Z
+        identificationType: identificationType
+        identificationId: identificationId
+      properties:
+        identificationId:
+          description: Identifier
+          type: string
+        identificationType:
+          description: "Identification type (passport, national identity card, drivers\
+            \ license, social security number, birth certificate)"
+          type: string
+        issuingAuthority:
+          description: "Authority which has issued the identifier, such as: social\
+            \ security, town hall"
+          type: string
+        issuingDate:
+          description: Date at which the identifier was issued
+          format: date-time
+          type: string
+        attachment:
+          $ref: '#/components/schemas/AttachmentRefOrValue'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+      type: object
+    Place:
+      description: Place reference. Place defines the places where the products are
+        sold or delivered.
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+      type: object
+    Quantity:
+      description: An amount in a given unit
+      example:
+        amount: 0.8008282
+        units: units
+      properties:
+        amount:
+          default: 1.0
+          description: Numeric value in a given unit
+          format: float
+          type: number
+        units:
+          description: Unit
+          type: string
+      type: object
+    TimePeriod:
+      description: "A period of time, either as a deadline (endDateTime only) a startDateTime\
+        \ only, or both"
+      example:
+        startDateTime: 1985-04-12T23:20:50.52Z
+        endDateTime: 1985-04-12T23:20:50.52Z
+      properties:
+        endDateTime:
+          description: "End of the time period, using IETC-RFC-3339 format"
+          example: 1985-04-12T23:20:50.52Z
+          format: date-time
+          type: string
+        startDateTime:
+          description: "Start of the time period, using IETC-RFC-3339 format"
+          example: 1985-04-12T23:20:50.52Z
+          format: date-time
+          type: string
+      type: object
+    UserAsset:
+      example:
+        role: owner
+        entityType: entityType
+        entitlement:
+        - function: function
+          action: action
+          id: id
+        - function: function
+          action: action
+          id: id
+        id: f066ffd5-e685-43bc-ad57-bfb7639decb1
+        assetType: assetType
+      properties:
+        id:
+          description: "Unique identifier of referenced entity within the entity/asset\
+            \ pair (customerId, accountId, mobile line number, ...)"
+          example: f066ffd5-e685-43bc-ad57-bfb7639decb1
+          type: string
+        assetType:
+          description: "Second level to define the type of managed element for product/service/resource\
+            \ managed entities (e.g.: mobile line subscription, video platform license,\
+            \ mobile equipment, etc). Allows identifying the specific asset within\
+            \ the server referenced. Supported values are implementation and application\
+            \ specific. Other values can be added if those listed are not enough"
+          type: string
+        entityType:
+          description: "Type of managed entity (e.g.: product, resource, service,\
+            \ customer, account)"
+          type: string
+        role:
+          description: "Represents the part played by an individual in relation to\
+            \ being granted a set of entitlements for manageable assets (e.g.: owner,\
+            \ user, viewer, ...)"
+          example: owner
+          type: string
+        entitlement:
+          description: information about individual entitlements to define access
+            levels to operate over different functions that can be defined in an asset
+          items:
+            $ref: '#/components/schemas/Entitlement'
+          type: array
+      required:
+      - entityType
+      - id
+      type: object
+    Userinfo:
+      example:
+        sub: a066ffd5-f685-43bc-ad57-bfb7639decb0
+        website: https://janedoe.com
+        zoneinfo: America/Los_Angeles
+        birthdate: 1970-11-02
+        email_verified: false
+        address:
+          country: country
+          streetType: streetType
+          geographicLocation:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          city: city
+          streetNr: streetNr
+          locality: locality
+          postcode: postcode
+          streetNrLast: streetNrLast
+          streetNrSuffix: streetNrSuffix
+          streetName: streetName
+          stateOrProvince: stateOrProvince
+          name: name
+          streetNrLastSuffix: streetNrLastSuffix
+          streetSuffix: streetSuffix
+          geographicSubAddress:
+          - buildingName: buildingName
+            subUnitNumber: subUnitNumber
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            privateStreetName: privateStreetName
+          - buildingName: buildingName
+            subUnitNumber: subUnitNumber
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            privateStreetName: privateStreetName
+          id: id
+          href: href
+        gender: female
+        profile: https://my.blog.com/janeDoe
+        legalId:
+        - issuingAuthority: issuingAuthority
+          attachment:
+            '@referredType': '@referredType'
+            attachmentType: video
+            validFor:
+              startDateTime: 1985-04-12T23:20:50.52Z
+              endDateTime: 1985-04-12T23:20:50.52Z
+            '@type': '@type'
+            description: Photograph of the Product
+            mimeType: mimeType
+            content: content
+            url: http://host/Content/4aafacbd-11ff-4dc8-b445-305f2215715f
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: 4aafacbd-11ff-4dc8-b445-305f2215715f
+            href: http://host/Attachment/4aafacbd-11ff-4dc8-b445-305f2215715f
+            '@schemaLocation': https://openapi-generator.tech
+          issuingDate: 2000-01-23T04:56:07.000+00:00
+          validFor:
+            startDateTime: 1985-04-12T23:20:50.52Z
+            endDateTime: 1985-04-12T23:20:50.52Z
+          identificationType: identificationType
+          identificationId: identificationId
+        - issuingAuthority: issuingAuthority
+          attachment:
+            '@referredType': '@referredType'
+            attachmentType: video
+            validFor:
+              startDateTime: 1985-04-12T23:20:50.52Z
+              endDateTime: 1985-04-12T23:20:50.52Z
+            '@type': '@type'
+            description: Photograph of the Product
+            mimeType: mimeType
+            content: content
+            url: http://host/Content/4aafacbd-11ff-4dc8-b445-305f2215715f
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: 4aafacbd-11ff-4dc8-b445-305f2215715f
+            href: http://host/Attachment/4aafacbd-11ff-4dc8-b445-305f2215715f
+            '@schemaLocation': https://openapi-generator.tech
+          issuingDate: 2000-01-23T04:56:07.000+00:00
+          validFor:
+            startDateTime: 1985-04-12T23:20:50.52Z
+            endDateTime: 1985-04-12T23:20:50.52Z
+          identificationType: identificationType
+          identificationId: identificationId
+        phone_number_verified: false
+        preferred_username: janeDoe
+        given_name: Jane
+        locale: en
+        middle_name: Mary
+        picture: https://some.url.com/janeDoe.jpg
+        userAssets:
+        - role: owner
+          entityType: entityType
+          entitlement:
+          - function: function
+            action: action
+            id: id
+          - function: function
+            action: action
+            id: id
+          id: f066ffd5-e685-43bc-ad57-bfb7639decb1
+          assetType: assetType
+        - role: owner
+          entityType: entityType
+          entitlement:
+          - function: function
+            action: action
+            id: id
+          - function: function
+            action: action
+            id: id
+          id: f066ffd5-e685-43bc-ad57-bfb7639decb1
+          assetType: assetType
+        name: Jane Mary Doe
+        nickname: JaneDoe
+        phone_number: +1 (425) 555-1212
+        family_name: Doe
+        email: jane.doe@email.com
+      properties:
+        birthdate:
+          description: "End-User's birthday, represented as an [ISO8601-2004] YYYY-MM-DD\
+            \ format. The year MAY be 0000, indicating that it is omitted. To represent\
+            \ only the year, YYYY format is allowed. Note that depending on the underlying\
+            \ platform's date related function, providing just year can result in\
+            \ varying month and day, so the implementers need to take this factor\
+            \ into account to correctly process the dates"
+          example: 1970-11-02
+          type: string
+        email:
+          description: "End-User's preferred e-mail address. Its value MUST conform\
+            \ to the [RFC5322] addr-spec syntax"
+          example: jane.doe@email.com
+          type: string
+        email_verified:
+          default: false
+          description: True if the user's email has been verified.
+          type: boolean
+        family_name:
+          description: "Surname(s) or last name(s) of the End-User. Note that in some\
+            \ cultures, people can have multiple family names or no family name; all\
+            \ can be present, with the names being separated by space characters"
+          example: Doe
+          type: string
+        gender:
+          description: End-User's gender. Values defined by this specification are
+            female and male. Other values MAY be used when neither of the defined
+            values are applicable
+          example: female
+          type: string
+        given_name:
+          description: "Given name(s) or first name(s) of the End-User. Note that\
+            \ in some cultures, people can have multiple given names; all can be present,\
+            \ with the names being separated by space characters"
+          example: Jane
+          type: string
+        locale:
+          description: "End-User's locale, represented as a [RFC5646] language tag.\
+            \ This is typically an [ISO639-1] language code in lowercase and an [ISO3166-1]\
+            \ country code in uppercase, separated by a dash. For example, en-US or\
+            \ fr-CA. As a compatibility note, some implementations have used an underscore\
+            \ as the separator rather than a dash, for example, en_US"
+          example: en
+          type: string
+        middle_name:
+          description: "Middle name(s) of the End-User. Note that in some cultures,\
+            \ people can have multiple middle names; all can be present, with the\
+            \ names being separated by space characters. Also note that in some cultures,\
+            \ middle names are not used"
+          example: Mary
+          type: string
+        name:
+          description: "End-User's full name in displayable form including all name\
+            \ parts, possibly including titles and suffixes, ordered according to\
+            \ the End-User's locale and preferences"
+          example: Jane Mary Doe
+          type: string
+        nickname:
+          description: "Casual name of the End-User that may or may not be the same\
+            \ as the given_name. For instance, a nickname value of Mike might be returned\
+            \ alongside a given_name value of Michael"
+          example: JaneDoe
+          type: string
+        phone_number:
+          description: "End-User's preferred telephone number. [E.164] is RECOMMENDED\
+            \ as the format of this Claim, for example, +1 (425) 555-1212 or +56 82)\
+            \ 687 2400. If the phone number contains an extension, it is RECOMMENDED\
+            \ that the extension be represented using the [RFC3966] extension syntax,\
+            \ for example, +1 (604) 555-1234;ext=5678"
+          example: +1 (425) 555-1212
+          type: string
+        phone_number_verified:
+          default: false
+          description: True if the user's phone number has been verified.
+          type: boolean
+        picture:
+          description: "URL of the End-User's profile picture. This URL MUST refer\
+            \ to an image file (for example, a PNG, JPEG, or GIF image file), rather\
+            \ than to a Web page containing an image. Note that this URL SHOULD specifically\
+            \ reference a profile photo of the End-User suitable for displaying when\
+            \ describing the End-User, rather than an arbitrary photo taken by the\
+            \ End-User"
+          example: https://some.url.com/janeDoe.jpg
+          type: string
+        preferred_username:
+          description: "Shorthand name by which the End-User wishes to be referred\
+            \ to at the RP, such as janedoe or j.doe. This value MAY be any valid\
+            \ JSON string including special characters such as @, /, or whitespace"
+          example: janeDoe
+          type: string
+        profile:
+          description: URL of the End-User's profile page. The contents of this Web
+            page SHOULD be about the End-User
+          example: https://my.blog.com/janeDoe
+          type: string
+        sub:
+          description: Subject - Unique Identifier for the End-User
+          example: a066ffd5-f685-43bc-ad57-bfb7639decb0
+          type: string
+        website:
+          description: URL of the End-User's Web page or blog. This Web page SHOULD
+            contain information published by the End-User or an organization that
+            the End-User is affiliated with
+          example: https://janedoe.com
+          type: string
+        zoneinfo:
+          description: "String from zoneinfo time zone database representing the End-User's\
+            \ time zone. For example, Europe/Paris or America/Los_Angeles"
+          example: America/Los_Angeles
+          type: string
+        address:
+          $ref: '#/components/schemas/GeographicAddress'
+        legalId:
+          description: Identification documentation of the contact
+          items:
+            $ref: '#/components/schemas/IndividualIdentification'
+          type: array
+        userAssets:
+          description: List of additional profile information
+          items:
+            $ref: '#/components/schemas/UserAsset'
+          type: array
+      required:
+      - name
+      - sub
+      type: object
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+x-original-swagger-version: "2.0"

@@ -1,0 +1,2146 @@
+openapi: 3.0.1
+info:
+  description: "## TMF API Reference: TMF 678 - Customer bill Management\n\n### Release:\
+    \ 19.5 - December 2019\n\nThe Customer Bill Management API allows to find and\
+    \ retrieve one or several customer bills (also called invoices) produced for a\
+    \ customer. A customer bill is an electronic or paper document produced at the\
+    \ end of the billing process. The customer bill gathers and displays different\
+    \ items (applied customer billing rates generated during the rating and billing\
+    \ processes) to be charged to a customer. It represents a total amount due for\
+    \ all the products during the billing period and all significant information like\
+    \ dates, bill reference...\nThis API provides also operations to find and retrieve\
+    \ the details of applied customer billing rates presented on a customer bill.\
+    \ \nFinally, this API allows to request in real-time a customer bill creation\
+    \ and to manage this request.\n\n### Resources \n- customerBill\n- appliedCustomerBillingRate\n\
+    - customerBillOnDemand\n- billingCycle\n\n### Operations\nCustomer Bill Management\
+    \ API performs the following operations :\n- Retrieve a customer bill or a collection\
+    \ of customer bills depending on filter criteria.\n- Partial update of  a customer\
+    \ bill (for administration purposes).\n-  Retrieve an applied customer billing\
+    \ rate or a collection of applied customer billing rates depending on filter criteria.\n\
+    -  Create a customer bill on demand request, retrieve one or a collection of \
+    \ customer bill on demand request(s) depending on filter criteria.\n\n- Manage\
+    \ notification of events on customer bill and customer bill on demand.\n\nCopyright\
+    \ © TM Forum 2018. All Rights Reserved."
+  title: API CustomerBill
+  version: 4.0.0
+servers:
+- url: https://serverRoot/tmf-api/customerBillManagement/v4/
+tags:
+- name: customerBillOnDemand
+- name: customerBill
+- name: appliedCustomerBillingRate
+- name: events subscription
+paths:
+  /customerBillOnDemand:
+    get:
+      description: This operation list or find CustomerBillOnDemand entities
+      operationId: listCustomerBillOnDemand
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CustomerBillOnDemand'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find CustomerBillOnDemand objects
+      tags:
+      - customerBillOnDemand
+      x-eov-operation-handler: controllers/CustomerBillOnDemandController
+    post:
+      description: This operation creates a CustomerBillOnDemand entity.
+      operationId: createCustomerBillOnDemand
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/CustomerBillOnDemand_Create'
+        description: The CustomerBillOnDemand to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CustomerBillOnDemand'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a CustomerBillOnDemand
+      tags:
+      - customerBillOnDemand
+      x-codegen-request-body-name: customerBillOnDemand
+      x-eov-operation-handler: controllers/CustomerBillOnDemandController
+  /customerBillOnDemand/{id}:
+    get:
+      description: This operation retrieves a CustomerBillOnDemand entity. Attribute
+        selection is enabled for all first level attributes.
+      operationId: retrieveCustomerBillOnDemand
+      parameters:
+      - description: Identifier of the CustomerBillOnDemand
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CustomerBillOnDemand'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a CustomerBillOnDemand by ID
+      tags:
+      - customerBillOnDemand
+      x-eov-operation-handler: controllers/CustomerBillOnDemandController
+  /customerBill:
+    get:
+      description: This operation list or find CustomerBill entities
+      operationId: listCustomerBill
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CustomerBill'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find CustomerBill objects
+      tags:
+      - customerBill
+      x-eov-operation-handler: controllers/CustomerBillController
+  /customerBill/{id}:
+    get:
+      description: This operation retrieves a CustomerBill entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrieveCustomerBill
+      parameters:
+      - description: Identifier of the CustomerBill
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CustomerBill'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a CustomerBill by ID
+      tags:
+      - customerBill
+      x-eov-operation-handler: controllers/CustomerBillController
+    patch:
+      description: This operation updates partially a CustomerBill entity.
+      operationId: patchCustomerBill
+      parameters:
+      - description: Identifier of the CustomerBill
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/CustomerBill_Update'
+        description: The CustomerBill to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CustomerBill'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a CustomerBill
+      tags:
+      - customerBill
+      x-codegen-request-body-name: customerBill
+      x-eov-operation-handler: controllers/CustomerBillController
+  /appliedCustomerBillingRate:
+    get:
+      description: This operation list or find AppliedCustomerBillingRate entities
+      operationId: listAppliedCustomerBillingRate
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AppliedCustomerBillingRate'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find AppliedCustomerBillingRate objects
+      tags:
+      - appliedCustomerBillingRate
+      x-eov-operation-handler: controllers/AppliedCustomerBillingRateController
+  /appliedCustomerBillingRate/{id}:
+    get:
+      description: This operation retrieves a AppliedCustomerBillingRate entity. Attribute
+        selection is enabled for all first level attributes.
+      operationId: retrieveAppliedCustomerBillingRate
+      parameters:
+      - description: Identifier of the AppliedCustomerBillingRate
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/AppliedCustomerBillingRate'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a AppliedCustomerBillingRate by ID
+      tags:
+      - appliedCustomerBillingRate
+      x-eov-operation-handler: controllers/AppliedCustomerBillingRateController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+components:
+  schemas:
+    AccountBalance:
+      description: Balances linked to the account
+      example:
+        amount:
+          unit: unit
+          value: 0.8008282
+        balanceType: balanceType
+        '@baseType': '@baseType'
+        validFor:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        '@type': '@type'
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        balanceType:
+          description: "Type of the balance : deposit balance, disputed balance, loyalty\
+            \ balance, receivable balance..."
+          type: string
+        amount:
+          $ref: '#/components/schemas/Money'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - amount
+      - balanceType
+      - validFor
+      type: object
+    Any:
+      type: object
+    AppliedBillingRateCharacteristic:
+      description: "An applied billing rate has dynamic characteristics according\
+        \ to the its type (characteristics are based on the service type, line of\
+        \ business or on others parameters)"
+      example:
+        '@baseType': '@baseType'
+        '@type': '@type'
+        valueType: valueType
+        name: name
+        '@schemaLocation': https://openapi-generator.tech
+        value: "{}"
+      properties:
+        name:
+          description: Name of the characteristic
+          type: string
+        valueType:
+          description: Data type of the value of the characteristic
+          type: string
+        value:
+          type: object
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    AppliedBillingTaxRate:
+      description: The applied billing tax rate represents taxes applied billing rate
+        it refers to. It is calculated during the billing process.
+      example:
+        taxRate: 0.8008282
+        '@baseType': '@baseType'
+        '@type': '@type'
+        taxAmount:
+          unit: unit
+          value: 0.8008282
+        '@schemaLocation': https://openapi-generator.tech
+        taxCategory: taxCategory
+      properties:
+        taxCategory:
+          description: A categorization of the tax rate
+          type: string
+        taxRate:
+          description: Applied rate
+          format: float
+          type: number
+        taxAmount:
+          $ref: '#/components/schemas/Money'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    AppliedCustomerBillingRate:
+      description: A customer bill displays applied billing rates created before or
+        during the billing process.
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        product:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        taxExcludedAmount:
+          unit: unit
+          value: 0.8008282
+        '@type': '@type'
+        description: description
+        bill:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        type: type
+        billingAccount:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        characteristic:
+        - '@baseType': '@baseType'
+          '@type': '@type'
+          valueType: valueType
+          name: name
+          '@schemaLocation': https://openapi-generator.tech
+          value: "{}"
+        - '@baseType': '@baseType'
+          '@type': '@type'
+          valueType: valueType
+          name: name
+          '@schemaLocation': https://openapi-generator.tech
+          value: "{}"
+        periodCoverage:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        isBilled: true
+        '@baseType': '@baseType'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+        appliedTax:
+        - taxRate: 0.8008282
+          '@baseType': '@baseType'
+          '@type': '@type'
+          taxAmount:
+            unit: unit
+            value: 0.8008282
+          '@schemaLocation': https://openapi-generator.tech
+          taxCategory: taxCategory
+        - taxRate: 0.8008282
+          '@baseType': '@baseType'
+          '@type': '@type'
+          taxAmount:
+            unit: unit
+            value: 0.8008282
+          '@schemaLocation': https://openapi-generator.tech
+          taxCategory: taxCategory
+        taxIncludedAmount:
+          unit: unit
+          value: 0.8008282
+      properties:
+        id:
+          description: Unique identifier of the customer applied billing rate
+          type: string
+        href:
+          description: Reference of the customer applied billing rate
+          type: string
+        date:
+          description: Creation date of the applied billing rate
+          format: date-time
+          type: string
+        description:
+          description: Additional data to be displayed on the bill for this customer
+            applied billing rate
+          type: string
+        isBilled:
+          description: "If isBilled = true then bill should be provided, if false\
+            \ then billingAccount should be provided"
+          type: boolean
+        name:
+          description: Name of the customer applied billing rate
+          type: string
+        type:
+          description: "Type of the applied billing rate : appliedBillingCharge (any\
+            \ kind of charge except taxation charges : recurringCharge, oneTimeCharge,\
+            \ usageCharge),  appliedBillingCredit (any kind of credit : rebate or\
+            \ productAlteration) or appliedPenaltyCharge (penalty charges such as\
+            \ late fees, payment rejection fees,...)"
+          type: string
+        appliedTax:
+          items:
+            $ref: '#/components/schemas/AppliedBillingTaxRate'
+          type: array
+        bill:
+          $ref: '#/components/schemas/BillRef'
+        billingAccount:
+          $ref: '#/components/schemas/BillingAccountRef'
+        characteristic:
+          items:
+            $ref: '#/components/schemas/AppliedBillingRateCharacteristic'
+          type: array
+        periodCoverage:
+          $ref: '#/components/schemas/TimePeriod'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        taxExcludedAmount:
+          $ref: '#/components/schemas/Money'
+        taxIncludedAmount:
+          $ref: '#/components/schemas/Money'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - id
+      type: object
+    AppliedPayment:
+      description: The applied payment is the result of lettering process. It enables
+        to assign automatically or manually part of incoming payment amount to a bill.
+      example:
+        '@baseType': '@baseType'
+        '@type': '@type'
+        payment:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        appliedAmount:
+          unit: unit
+          value: 0.8008282
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        appliedAmount:
+          $ref: '#/components/schemas/Money'
+        payment:
+          $ref: '#/components/schemas/PaymentRef'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    Attachment:
+      description: "Complements the description of an element (for instance a product)\
+        \ through video, pictures..."
+      properties:
+        id:
+          description: Unique identifier for this particular attachment
+          type: string
+        href:
+          description: URI for this Attachment
+          type: string
+        attachmentType:
+          description: "Attachment type such as video, picture"
+          type: string
+        content:
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64"
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        mimeType:
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          type: string
+        name:
+          description: The name of the attachment
+          type: string
+        url:
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)"
+          type: string
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    AttachmentRef:
+      description: "Attachment reference. An attachment complements the description\
+        \ of an element (for instance a product) through video, pictures"
+      properties:
+        id:
+          description: Unique-Identifier for this attachment
+          type: string
+        href:
+          description: URL serving as reference for the attachment resource
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        url:
+          description: Link to the attachment media/content
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    AttachmentRefOrValue:
+      description: "An attachment by value or by reference. For AttachmentRefOrValue,\
+        \ the attribute type,schemaLocation and referredType are related to the contained\
+        \ entity and not to AttchmentRefOrValue itself"
+      example:
+        '@referredType': '@referredType'
+        attachmentType: attachmentType
+        validFor:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        '@type': '@type'
+        description: description
+        mimeType: mimeType
+        content: content
+        url: url
+        size:
+          amount: 6.0274563
+          units: units
+        '@baseType': '@baseType'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier for this particular attachment
+          type: string
+        href:
+          description: URI for this Attachment
+          type: string
+        attachmentType:
+          description: "Attachment type such as video, picture"
+          type: string
+        content:
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64"
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        mimeType:
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          type: string
+        name:
+          description: The name of the attachment
+          type: string
+        url:
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)"
+          type: string
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      type: object
+    BillRef:
+      description: Bill reference.
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique-Identifier for this <123>
+          type: string
+        href:
+          description: URL serving as reference for the <xyz> resource
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    BillingAccountRef:
+      description: Reference to the billing account in case of not billed item.
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique-Identifier for this <123>
+          type: string
+        href:
+          description: URL serving as reference for the <xyz> resource
+          type: string
+        name:
+          description: Name of the Billingaccount
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    Characteristic:
+      description: Describes a given characteristic of an object or entity through
+        a name/value pair.
+      properties:
+        name:
+          description: Name of the characteristic
+          type: string
+        valueType:
+          description: Data type of the value of the characteristic
+          type: string
+        value:
+          type: object
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    CustomerBill:
+      description: "The billing account receives all charges (recurring, one time\
+        \ and usage) of the offers and products assigned to it during order process.\
+        \ Periodically according to billing cycle specifications attached to the billing\
+        \ account or as a result of an event, a customer bill (aka invoice) is produced.\
+        \ This customer bill concerns different related parties which play a role\
+        \ on it : for example, a customer bill is produced by an operator, is sent\
+        \ to a bill receiver and has to be paid by a payer.\nA payment method could\
+        \ be assigned to the customer bill to build the call of payment. Lettering\
+        \ process enables to assign automatically or manually incoming amount from\
+        \ payments to customer bills (payment items).\nA tax item is created for each\
+        \ tax rate used in the customer bill.\nThe financial account represents a\
+        \ financial entity which records all customer’s accounting events : payment\
+        \ amount are recorded as credit and invoices amount are recorded as debit.\
+        \ It gives the customer overall balance (account balance).\nThe customer bill\
+        \ is linked to one or more documents that can be downloaded via a provided\
+        \ url."
+      example:
+        runType: runType
+        '@type': '@type'
+        taxItem:
+        - taxRate: 1.4658129
+          '@baseType': '@baseType'
+          '@type': '@type'
+          taxAmount:
+            unit: unit
+            value: 0.8008282
+          '@schemaLocation': https://openapi-generator.tech
+          taxCategory: taxCategory
+        - taxRate: 1.4658129
+          '@baseType': '@baseType'
+          '@type': '@type'
+          taxAmount:
+            unit: unit
+            value: 0.8008282
+          '@schemaLocation': https://openapi-generator.tech
+          taxCategory: taxCategory
+        financialAccount:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          accountBalance:
+          - amount:
+              unit: unit
+              value: 0.8008282
+            balanceType: balanceType
+            '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            '@schemaLocation': https://openapi-generator.tech
+          - amount:
+              unit: unit
+              value: 0.8008282
+            balanceType: balanceType
+            '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            '@schemaLocation': https://openapi-generator.tech
+          '@schemaLocation': https://openapi-generator.tech
+        billingAccount:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        remainingAmount:
+          unit: unit
+          value: 0.8008282
+        '@baseType': '@baseType'
+        id: id
+        href: href
+        state: null
+        '@schemaLocation': https://openapi-generator.tech
+        billNo: billNo
+        billDocument:
+        - '@referredType': '@referredType'
+          attachmentType: attachmentType
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          mimeType: mimeType
+          content: content
+          url: url
+          size:
+            amount: 6.0274563
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          attachmentType: attachmentType
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          mimeType: mimeType
+          content: content
+          url: url
+          size:
+            amount: 6.0274563
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        taxExcludedAmount:
+          unit: unit
+          value: 0.8008282
+        billingPeriod:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        billDate: 2000-01-23T04:56:07.000+00:00
+        relatedParty:
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        nextBillDate: 2000-01-23T04:56:07.000+00:00
+        amountDue:
+          unit: unit
+          value: 0.8008282
+        appliedPayment:
+        - '@baseType': '@baseType'
+          '@type': '@type'
+          payment:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          appliedAmount:
+            unit: unit
+            value: 0.8008282
+          '@schemaLocation': https://openapi-generator.tech
+        - '@baseType': '@baseType'
+          '@type': '@type'
+          payment:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          appliedAmount:
+            unit: unit
+            value: 0.8008282
+          '@schemaLocation': https://openapi-generator.tech
+        paymentDueDate: 2000-01-23T04:56:07.000+00:00
+        lastUpdate: 2000-01-23T04:56:07.000+00:00
+        paymentMethod:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        category: category
+        taxIncludedAmount:
+          unit: unit
+          value: 0.8008282
+      properties:
+        id:
+          description: Unique identifier of he bill
+          type: string
+        href:
+          description: Bill unique reference
+          type: string
+        billDate:
+          description: Bill date
+          format: date-time
+          type: string
+        billNo:
+          description: Bill reference known by the customer or the party and displayed
+            on the bill. Could be different from the id
+          type: string
+        category:
+          description: "Category of the bill produced : normal, duplicate, interim,\
+            \ last, trial customer or credit note for example"
+          type: string
+        lastUpdate:
+          description: Date of bill last update
+          format: date-time
+          type: string
+        nextBillDate:
+          description: ). Approximate date of  the next bill production given for
+            information (only used for onCycle bill)
+          format: date-time
+          type: string
+        paymentDueDate:
+          description: Date at which the amount due should have been paid
+          format: date-time
+          type: string
+        runType:
+          description: onCycle (a bill can be created as a result of a cycle run)
+            or offCycle (a bill can be created as a result of other events such as
+            customer request or account close)
+          type: string
+        amountDue:
+          $ref: '#/components/schemas/Money'
+        appliedPayment:
+          items:
+            $ref: '#/components/schemas/AppliedPayment'
+          type: array
+        billDocument:
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+          type: array
+        billingAccount:
+          $ref: '#/components/schemas/BillingAccountRef'
+        billingPeriod:
+          $ref: '#/components/schemas/TimePeriod'
+        financialAccount:
+          $ref: '#/components/schemas/FinancialAccountRef'
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentMethodRef'
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedPartyRef'
+          type: array
+        remainingAmount:
+          $ref: '#/components/schemas/Money'
+        state:
+          $ref: '#/components/schemas/stateValue'
+        taxExcludedAmount:
+          $ref: '#/components/schemas/Money'
+        taxIncludedAmount:
+          $ref: '#/components/schemas/Money'
+        taxItem:
+          items:
+            $ref: '#/components/schemas/TaxItem'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    CustomerBill_Update:
+      description: "The billing account receives all charges (recurring, one time\
+        \ and usage) of the offers and products assigned to it during order process.\
+        \ Periodically according to billing cycle specifications attached to the billing\
+        \ account or as a result of an event, a customer bill (aka invoice) is produced.\
+        \ This customer bill concerns different related parties which play a role\
+        \ on it : for example, a customer bill is produced by an operator, is sent\
+        \ to a bill receiver and has to be paid by a payer.\nA payment method could\
+        \ be assigned to the customer bill to build the call of payment. Lettering\
+        \ process enables to assign automatically or manually incoming amount from\
+        \ payments to customer bills (payment items).\nA tax item is created for each\
+        \ tax rate used in the customer bill.\nThe financial account represents a\
+        \ financial entity which records all customer’s accounting events : payment\
+        \ amount are recorded as credit and invoices amount are recorded as debit.\
+        \ It gives the customer overall balance (account balance).\nThe customer bill\
+        \ is linked to one or more documents that can be downloaded via a provided\
+        \ url.\nSkipped properties: id,href,amountDue,appliedPayment,billDate,billDocument,billNo,billingAccount,billingPeriod,category,financialAccount,lastUpdate,nextBillDate,paymentDueDate,paymentMethod,relatedParty,remainingAmount,runType,taxExcludedAmount,taxIncludedAmount,taxItem"
+      properties:
+        state:
+          $ref: '#/components/schemas/stateValue'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    CustomerBillOnDemand:
+      description: This resource is used to manage the creation request of a customer
+        bill in real-time (on demand).
+      example:
+        customerBill:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@baseType': '@baseType'
+        '@type': '@type'
+        lastUpdate: lastUpdate
+        name: name
+        description: description
+        id: id
+        href: href
+        state: null
+        billingAccount:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        relatedParty:
+          '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the customer bill on demand request given
+            by the server
+          type: string
+        href:
+          description: Reference of the customer bill on demand request
+          type: string
+        description:
+          description: Additional data describing the customer bill on demand request
+          type: string
+        lastUpdate:
+          description: The last date time when the customer bill on demand has been
+            updated
+          type: string
+        name:
+          description: Friendly name to identify the customer bill on demand request
+          type: string
+        billingAccount:
+          $ref: '#/components/schemas/BillingAccountRef'
+        customerBill:
+          $ref: '#/components/schemas/BillRef'
+        relatedParty:
+          $ref: '#/components/schemas/RelatedPartyRef'
+        state:
+          $ref: '#/components/schemas/StateValues'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    CustomerBillOnDemand_Create:
+      description: "This resource is used to manage the creation request of a customer\
+        \ bill in real-time (on demand).\nSkipped properties: id,href"
+      properties:
+        description:
+          description: Additional data describing the customer bill on demand request
+          type: string
+        lastUpdate:
+          description: The last date time when the customer bill on demand has been
+            updated
+          type: string
+        name:
+          description: Friendly name to identify the customer bill on demand request
+          type: string
+        billingAccount:
+          $ref: '#/components/schemas/BillingAccountRef'
+        customerBill:
+          $ref: '#/components/schemas/BillRef'
+        relatedParty:
+          $ref: '#/components/schemas/RelatedPartyRef'
+        state:
+          $ref: '#/components/schemas/StateValues'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    EntityRef:
+      description: Entity reference schema to be use for all entityRef class.
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    FinancialAccountRef:
+      description: AccountReceivable reference. An account of money owed by a party
+        to another entity in exchange for goods or services that have been delivered
+        or used. An account receivable aggregates the amounts of one or more party
+        accounts (billing or settlement) owned by a given party.
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        accountBalance:
+        - amount:
+            unit: unit
+            value: 0.8008282
+          balanceType: balanceType
+          '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          '@schemaLocation': https://openapi-generator.tech
+        - amount:
+            unit: unit
+            value: 0.8008282
+          balanceType: balanceType
+          '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          '@schemaLocation': https://openapi-generator.tech
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the account
+          type: string
+        href:
+          description: Unique reference of the account
+          type: string
+        name:
+          description: Name of the account
+          type: string
+        accountBalance:
+          items:
+            $ref: '#/components/schemas/AccountBalance'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    Money:
+      description: A base / value business entity used to represent money
+      example:
+        unit: unit
+        value: 0.8008282
+      properties:
+        unit:
+          description: Currency (ISO4217 norm uses 3 letters to define the currency)
+          type: string
+        value:
+          description: A positive floating point number
+          format: float
+          type: number
+      type: object
+    PaymentMethodRef:
+      description: PaymentMethod reference. A payment method defines a specific mean
+        of payment (e.g direct debit).
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the payment mean
+          type: string
+        href:
+          description: Reference of the payment mean
+          type: string
+        name:
+          description: Name of the payment mean
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    PaymentRef:
+      description: "If an immediate payment has been done at the product order submission,\
+        \ the payment information are captured and stored (as a reference) in the\
+        \ order."
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: A name for the payment
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    ProductRef:
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    Quantity:
+      description: An amount in a given unit
+      example:
+        amount: 6.0274563
+        units: units
+      properties:
+        amount:
+          default: 1.0
+          description: Numeric value in a given unit
+          format: float
+          type: number
+        units:
+          description: Unit
+          type: string
+      type: object
+    Reference:
+      description: General Referencing Resource Schema
+      properties:
+        id:
+          description: Unique-Identifier for this <123>
+          type: string
+        href:
+          description: URL serving as reference for the <xyz> resource
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      type: object
+    RelatedPartyRef:
+      description: RelatedParty reference. A related party defines party or party
+        role linked to a specific entity.
+      example:
+        '@referredType': '@referredType'
+        role: role
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related party
+          type: string
+        href:
+          description: "Reference of the related party, could be a party reference\
+            \ or a party role reference"
+          type: string
+        name:
+          description: Name of the related party
+          type: string
+        role:
+          description: Role of the related party.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    StateValues:
+      description: ""
+      enum:
+      - inProgress
+      - rejected
+      - done
+      - terminatedWithError
+      type: string
+    TaxItem:
+      description: A tax item is created for each tax rate and tax type used in the
+        bill.
+      example:
+        taxRate: 1.4658129
+        '@baseType': '@baseType'
+        '@type': '@type'
+        taxAmount:
+          unit: unit
+          value: 0.8008282
+        '@schemaLocation': https://openapi-generator.tech
+        taxCategory: taxCategory
+      properties:
+        taxCategory:
+          description: Tax category
+          type: string
+        taxRate:
+          description: Applied rate of the tax
+          format: float
+          type: number
+        taxAmount:
+          $ref: '#/components/schemas/Money'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    TimePeriod:
+      description: "A period of time, either as a deadline (endDateTime only) a startDateTime\
+        \ only, or both"
+      example:
+        startDateTime: 2000-01-23T04:56:07.000+00:00
+        endDateTime: 2000-01-23T04:56:07.000+00:00
+      properties:
+        endDateTime:
+          description: "End of the time period, using IETC-RFC-3339 format"
+          format: date-time
+          type: string
+        startDateTime:
+          description: "Start of the time period, using IETC-RFC-3339 format. If you\
+            \ define a start, you must also define an end"
+          format: date-time
+          type: string
+      type: object
+    stateValue:
+      description: ""
+      enum:
+      - new
+      - onHold
+      - validated
+      - sent
+      - partiallyPaid
+      - settled
+      type: string
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+x-original-swagger-version: "2.0"

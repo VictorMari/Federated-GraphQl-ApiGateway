@@ -1,0 +1,3459 @@
+openapi: 3.0.1
+info:
+  description: "## TMF API Reference : TMF 699 - Sales \n\nThis API provides interfaces\
+    \ for Sales Lead, Sales Opportunity, Sales Quote and the other management capabilities\
+    \ to support the sales activities to build relationship with the prospect customer\
+    \ who could be a person or organization that has an interest in the goods and/or\
+    \ services and possibly become the actual customers with one or more Subscriptions."
+  title: API Sales
+  version: 4.0.0
+servers:
+- url: https://serverRoot/tmf-api/sales/v4/
+tags:
+- name: salesLead
+- name: notification listeners (client side)
+- name: events subscription
+paths:
+  /salesLead:
+    get:
+      description: This operation list or find SalesLead entities
+      operationId: listSalesLead
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SalesLead'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find SalesLead objects
+      tags:
+      - salesLead
+      x-eov-operation-handler: controllers/SalesLeadController
+    post:
+      description: This operation creates a SalesLead entity.
+      operationId: createSalesLead
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SalesLead_Create'
+        description: The SalesLead to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SalesLead'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a SalesLead
+      tags:
+      - salesLead
+      x-codegen-request-body-name: salesLead
+      x-eov-operation-handler: controllers/SalesLeadController
+  /salesLead/{id}:
+    delete:
+      description: This operation deletes a SalesLead entity.
+      operationId: deleteSalesLead
+      parameters:
+      - description: Identifier of the SalesLead
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Deletes a SalesLead
+      tags:
+      - salesLead
+      x-eov-operation-handler: controllers/SalesLeadController
+    get:
+      description: This operation retrieves a SalesLead entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrieveSalesLead
+      parameters:
+      - description: Identifier of the SalesLead
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SalesLead'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a SalesLead by ID
+      tags:
+      - salesLead
+      x-eov-operation-handler: controllers/SalesLeadController
+    patch:
+      description: This operation updates partially a SalesLead entity.
+      operationId: patchSalesLead
+      parameters:
+      - description: Identifier of the SalesLead
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SalesLead_Update'
+        description: The SalesLead to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SalesLead'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a SalesLead
+      tags:
+      - salesLead
+      x-codegen-request-body-name: salesLead
+      x-eov-operation-handler: controllers/SalesLeadController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /listener/salesLeadCreateEvent:
+    post:
+      description: Example of a client listener for receiving the notification SalesLeadCreateEvent
+      operationId: listenToSalesLeadCreateEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SalesLeadCreateEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity SalesLeadCreateEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/salesLeadAttributeValueChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification SalesLeadAttributeValueChangeEvent
+      operationId: listenToSalesLeadAttributeValueChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SalesLeadAttributeValueChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity SalesLeadAttributeValueChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/salesLeadStateChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification SalesLeadStateChangeEvent
+      operationId: listenToSalesLeadStateChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SalesLeadStateChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity SalesLeadStateChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/salesLeadDeleteEvent:
+    post:
+      description: Example of a client listener for receiving the notification SalesLeadDeleteEvent
+      operationId: listenToSalesLeadDeleteEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SalesLeadDeleteEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity SalesLeadDeleteEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+components:
+  schemas:
+    CategoryRef:
+      description: The category for grouping recommendations
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+        version: version
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        version:
+          description: Category version
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    ChannelRef:
+      description: "The channel to which the resource reference to. e.g. channel for\
+        \ selling product offerings, channel for opening a trouble ticket etc.."
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the channel.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    ContactMedium:
+      description: Indicates the contact medium that could be used to contact the
+        party.
+      example:
+        '@baseType': '@baseType'
+        validFor:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        '@type': '@type'
+        mediumType: mediumType
+        '@schemaLocation': https://openapi-generator.tech
+        preferred: true
+        characteristic:
+          country: country
+          city: city
+          '@type': '@type'
+          contactType: contactType
+          socialNetworkId: socialNetworkId
+          emailAddress: emailAddress
+          phoneNumber: phoneNumber
+          stateOrProvince: stateOrProvince
+          '@baseType': '@baseType'
+          faxNumber: faxNumber
+          postCode: postCode
+          street1: street1
+          street2: street2
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        mediumType:
+          description: "Type of the contact medium, such as: email address, telephone\
+            \ number, postal address"
+          type: string
+        preferred:
+          description: "If true, indicates that is the preferred contact medium"
+          type: boolean
+        characteristic:
+          $ref: '#/components/schemas/MediumCharacteristic'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    EntityRef:
+      description: Entity reference schema to be use for all entityRef class.
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    MarketSegmentRef:
+      description: "provides references to the corresponding market segment as target\
+        \ of product offerings. A market segment is grouping of Parties, GeographicAreas,\
+        \ SalesChannels, and so forth."
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the market segment
+          type: string
+        href:
+          description: Reference of the market segment
+          type: string
+        name:
+          description: Name of the market segment
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: (Class) type of the referred market segment
+          type: string
+      required:
+      - id
+      type: object
+    MarketingCampaignRef:
+      description: MarketingCampaign reference. Marketing campaign represents the
+        carrier-initiated marketing activity which aims at the better recognition
+        about its brand and offerings by the market
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    MediumCharacteristic:
+      description: Describes the contact medium characteristics that could be used
+        to contact a party (an individual or an organization)
+      example:
+        country: country
+        city: city
+        '@type': '@type'
+        contactType: contactType
+        socialNetworkId: socialNetworkId
+        emailAddress: emailAddress
+        phoneNumber: phoneNumber
+        stateOrProvince: stateOrProvince
+        '@baseType': '@baseType'
+        faxNumber: faxNumber
+        postCode: postCode
+        street1: street1
+        street2: street2
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        city:
+          description: The city
+          type: string
+        contactType:
+          description: "The type of contact, for example: phone number such as mobile,\
+            \ fixed home, fixed office. postal address such as shipping instalation…"
+          type: string
+        country:
+          description: The country
+          type: string
+        emailAddress:
+          description: Full email address in standard format
+          type: string
+        faxNumber:
+          description: The fax number of the contact
+          type: string
+        phoneNumber:
+          description: The primary phone number of the contact
+          type: string
+        postCode:
+          description: Postcode
+          type: string
+        socialNetworkId:
+          description: Identifier as a member of a social network
+          type: string
+        stateOrProvince:
+          description: State or province
+          type: string
+        street1:
+          description: Describes the street
+          type: string
+        street2:
+          description: Complementary street description
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    Money:
+      description: A base / value business entity used to represent money
+      example:
+        unit: unit
+        value: 0.8008282
+      properties:
+        unit:
+          description: Currency (ISO4217 norm uses 3 letters to define the currency)
+          type: string
+        value:
+          description: A positive floating point number
+          format: float
+          type: number
+      type: object
+    Note:
+      description: Extra information about a given entity
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        '@baseType': '@baseType'
+        author: author
+        '@type': '@type'
+        id: id
+        text: text
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: "Identifier of the note within its containing entity (may or\
+            \ may not be globally unique, depending on provider implementation)"
+          type: string
+        author:
+          description: Author of the note
+          type: string
+        date:
+          description: Date of the note
+          format: date-time
+          type: string
+        text:
+          description: Text of the note
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    ProductOfferingRef:
+      description: "ProductOffering reference. A product offering represents entities\
+        \ that are orderable from the provider of the catalog, this resource includes\
+        \ pricing information."
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    ProductRef:
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    ProductSpecificationRef:
+      description: "Product specification reference: A ProductSpecification is a detailed\
+        \ description of a tangible or intangible object made available externally\
+        \ in the form of a ProductOffering to customers or other parties playing a\
+        \ party role."
+      example:
+        '@referredType': '@referredType'
+        targetProductSchema:
+          '@baseType': '@baseType'
+          '@type': '@type'
+          '@schemaLocation': '@schemaLocation'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+        version: version
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        version:
+          description: Version of the product specification
+          type: string
+        targetProductSchema:
+          $ref: '#/components/schemas/TargetProductSchema'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    RelatedParty:
+      description: Related Entity reference. A related party defines party or party
+        role linked to a specific entity.
+      example:
+        '@referredType': '@referredType'
+        role: role
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        role:
+          description: Role played by the related party
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - '@referredType'
+      - id
+      type: object
+    SalesLead:
+      description: A Sales Lead is the identification of a person or organization
+        that has an interest in the goods and/or services provided in the prospect
+        of them becoming Customers with one or more Subscriptions.
+      example:
+        statusChangeReason: statusChangeReason
+        note:
+        - date: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          author: author
+          '@type': '@type'
+          id: id
+          text: text
+          '@schemaLocation': https://openapi-generator.tech
+        - date: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          author: author
+          '@type': '@type'
+          id: id
+          text: text
+          '@schemaLocation': https://openapi-generator.tech
+        productSpecification:
+          '@referredType': '@referredType'
+          targetProductSchema:
+            '@baseType': '@baseType'
+            '@type': '@type'
+            '@schemaLocation': '@schemaLocation'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          version: version
+        '@type': '@type'
+        rating: rating
+        channel:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        description: description
+        type: type
+        marketingCampaign:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        statusChangeDate: 2000-01-23T04:56:07.000+00:00
+        '@baseType': '@baseType'
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+        marketSegment:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        product:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        prospectContact:
+        - '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          mediumType: mediumType
+          '@schemaLocation': https://openapi-generator.tech
+          preferred: true
+          characteristic:
+            country: country
+            city: city
+            '@type': '@type'
+            contactType: contactType
+            socialNetworkId: socialNetworkId
+            emailAddress: emailAddress
+            phoneNumber: phoneNumber
+            stateOrProvince: stateOrProvince
+            '@baseType': '@baseType'
+            faxNumber: faxNumber
+            postCode: postCode
+            street1: street1
+            street2: street2
+            '@schemaLocation': https://openapi-generator.tech
+        - '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          mediumType: mediumType
+          '@schemaLocation': https://openapi-generator.tech
+          preferred: true
+          characteristic:
+            country: country
+            city: city
+            '@type': '@type'
+            contactType: contactType
+            socialNetworkId: socialNetworkId
+            emailAddress: emailAddress
+            phoneNumber: phoneNumber
+            stateOrProvince: stateOrProvince
+            '@baseType': '@baseType'
+            faxNumber: faxNumber
+            postCode: postCode
+            street1: street1
+            street2: street2
+            '@schemaLocation': https://openapi-generator.tech
+        productOffering:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        validFor:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        estimatedRevenue:
+          unit: unit
+          value: 0.8008282
+        creationDate: 2000-01-23T04:56:07.000+00:00
+        priority: null
+        relatedParty:
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        name: name
+        salesOpportunity:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        category:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          version: version
+        referredDate: 2000-01-23T04:56:07.000+00:00
+        status: null
+      properties:
+        id:
+          description: Unique identifier of the salesLead
+          type: string
+        href:
+          description: Reference of the salesLead
+          type: string
+        creationDate:
+          description: Date and time of the salesLead creation
+          format: date-time
+          type: string
+        description:
+          description: Unique description of the salesLead
+          type: string
+        name:
+          description: Name of the salesLead
+          type: string
+        rating:
+          description: "Identifies the potential of a salesLead for becoming a sale.\
+            \ Usual ratings for qualified leads are: hot, warm, cold."
+          type: string
+        referredDate:
+          description: "Date when the prospect information was received (for example,\
+            \ from a trade show)."
+          format: date-time
+          type: string
+        statusChangeDate:
+          description: Date and time of the last update
+          format: date-time
+          type: string
+        statusChangeReason:
+          description: Reason why the status has changed
+          type: string
+        type:
+          description: Indicates the nature of the salesLead
+          type: string
+        category:
+          $ref: '#/components/schemas/CategoryRef'
+        channel:
+          $ref: '#/components/schemas/ChannelRef'
+        estimatedRevenue:
+          $ref: '#/components/schemas/Money'
+        marketSegment:
+          $ref: '#/components/schemas/MarketSegmentRef'
+        marketingCampaign:
+          $ref: '#/components/schemas/MarketingCampaignRef'
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        priority:
+          $ref: '#/components/schemas/SalesLeadPriorityType'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        productOffering:
+          $ref: '#/components/schemas/ProductOfferingRef'
+        productSpecification:
+          $ref: '#/components/schemas/ProductSpecificationRef'
+        prospectContact:
+          items:
+            $ref: '#/components/schemas/ContactMedium'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        salesOpportunity:
+          $ref: '#/components/schemas/SalesOpportunityRef'
+        status:
+          $ref: '#/components/schemas/SalesLeadStateType'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    SalesLead_Create:
+      description: "A Sales Lead is the identification of a person or organization\
+        \ that has an interest in the goods and/or services provided in the prospect\
+        \ of them becoming Customers with one or more Subscriptions.\nSkipped properties:\
+        \ id,href,status,creationDate,statusChangeDate"
+      properties:
+        description:
+          description: Unique description of the salesLead
+          type: string
+        name:
+          description: Name of the salesLead
+          type: string
+        rating:
+          description: "Identifies the potential of a salesLead for becoming a sale.\
+            \ Usual ratings for qualified leads are: hot, warm, cold."
+          type: string
+        referredDate:
+          description: "Date when the prospect information was received (for example,\
+            \ from a trade show)."
+          format: date-time
+          type: string
+        statusChangeReason:
+          description: Reason why the status has changed
+          type: string
+        type:
+          description: Indicates the nature of the salesLead
+          type: string
+        category:
+          $ref: '#/components/schemas/CategoryRef'
+        channel:
+          $ref: '#/components/schemas/ChannelRef'
+        estimatedRevenue:
+          $ref: '#/components/schemas/Money'
+        marketSegment:
+          $ref: '#/components/schemas/MarketSegmentRef'
+        marketingCampaign:
+          $ref: '#/components/schemas/MarketingCampaignRef'
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        priority:
+          $ref: '#/components/schemas/SalesLeadPriorityType'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        productOffering:
+          $ref: '#/components/schemas/ProductOfferingRef'
+        productSpecification:
+          $ref: '#/components/schemas/ProductSpecificationRef'
+        prospectContact:
+          items:
+            $ref: '#/components/schemas/ContactMedium'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        salesOpportunity:
+          $ref: '#/components/schemas/SalesOpportunityRef'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - name
+      type: object
+    SalesLead_Update:
+      description: "A Sales Lead is the identification of a person or organization\
+        \ that has an interest in the goods and/or services provided in the prospect\
+        \ of them becoming Customers with one or more Subscriptions.\nSkipped properties:\
+        \ id,href,creationDate"
+      properties:
+        description:
+          description: Unique description of the salesLead
+          type: string
+        name:
+          description: Name of the salesLead
+          type: string
+        rating:
+          description: "Identifies the potential of a salesLead for becoming a sale.\
+            \ Usual ratings for qualified leads are: hot, warm, cold."
+          type: string
+        referredDate:
+          description: "Date when the prospect information was received (for example,\
+            \ from a trade show)."
+          format: date-time
+          type: string
+        statusChangeDate:
+          description: Date and time of the last update
+          format: date-time
+          type: string
+        statusChangeReason:
+          description: Reason why the status has changed
+          type: string
+        type:
+          description: Indicates the nature of the salesLead
+          type: string
+        category:
+          $ref: '#/components/schemas/CategoryRef'
+        channel:
+          $ref: '#/components/schemas/ChannelRef'
+        estimatedRevenue:
+          $ref: '#/components/schemas/Money'
+        marketSegment:
+          $ref: '#/components/schemas/MarketSegmentRef'
+        marketingCampaign:
+          $ref: '#/components/schemas/MarketingCampaignRef'
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        priority:
+          $ref: '#/components/schemas/SalesLeadPriorityType'
+        product:
+          $ref: '#/components/schemas/ProductRef'
+        productOffering:
+          $ref: '#/components/schemas/ProductOfferingRef'
+        productSpecification:
+          $ref: '#/components/schemas/ProductSpecificationRef'
+        prospectContact:
+          items:
+            $ref: '#/components/schemas/ContactMedium'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        salesOpportunity:
+          $ref: '#/components/schemas/SalesOpportunityRef'
+        status:
+          $ref: '#/components/schemas/SalesLeadStateType'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    SalesLeadPriorityType:
+      description: Urgency of working this salesLead
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+    SalesLeadStateType:
+      description: Valid values for the lifecycle state of a salesLead resource
+      enum:
+      - accepted
+      - acknowledged
+      - cancelled
+      - inProgress
+      - pending
+      - rejected
+      type: string
+    SalesOpportunityRef:
+      description: 'Sales Opportunity is an ''opportunity'' to generate revenue from
+        a Sales Account or Sales Lead. Opportunities are the pending deals that need
+        to be tracked and on which Sales Team plans and executes Sales Activities
+        (Events and Tasks). '
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    TargetProductSchema:
+      description: The reference object to the schema and type of target product which
+        is described by product specification
+      example:
+        '@baseType': '@baseType'
+        '@type': '@type'
+        '@schemaLocation': '@schemaLocation'
+      properties:
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: This field provides a link to the schema describing the target
+            product
+          type: string
+        '@type':
+          description: Class type of the target product
+          type: string
+      required:
+      - '@schemaLocation'
+      - '@type'
+      type: object
+    TimePeriod:
+      description: "A period of time, either as a deadline (endDateTime only) a startDateTime\
+        \ only, or both"
+      example:
+        startDateTime: 2000-01-23T04:56:07.000+00:00
+        endDateTime: 2000-01-23T04:56:07.000+00:00
+      properties:
+        endDateTime:
+          description: "End of the time period, using IETC-RFC-3339 format"
+          format: date-time
+          type: string
+        startDateTime:
+          description: "Start of the time period, using IETC-RFC-3339 format. If you\
+            \ define a start, you must also define an end"
+          format: date-time
+          type: string
+      type: object
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    SalesLeadCreateEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          salesLead:
+            statusChangeReason: statusChangeReason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            productSpecification:
+              '@referredType': '@referredType'
+              targetProductSchema:
+                '@baseType': '@baseType'
+                '@type': '@type'
+                '@schemaLocation': '@schemaLocation'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            '@type': '@type'
+            rating: rating
+            channel:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            type: type
+            marketingCampaign:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            marketSegment:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            product:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            prospectContact:
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            productOffering:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            estimatedRevenue:
+              unit: unit
+              value: 0.8008282
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            priority: null
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            name: name
+            salesOpportunity:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            category:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            referredDate: 2000-01-23T04:56:07.000+00:00
+            status: null
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/SalesLeadCreateEventPayload'
+      type: object
+    SalesLeadCreateEventPayload:
+      description: The event data structure
+      example:
+        salesLead:
+          statusChangeReason: statusChangeReason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          productSpecification:
+            '@referredType': '@referredType'
+            targetProductSchema:
+              '@baseType': '@baseType'
+              '@type': '@type'
+              '@schemaLocation': '@schemaLocation'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          '@type': '@type'
+          rating: rating
+          channel:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          type: type
+          marketingCampaign:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          marketSegment:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          product:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          prospectContact:
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          productOffering:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          estimatedRevenue:
+            unit: unit
+            value: 0.8008282
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          priority: null
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          name: name
+          salesOpportunity:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          category:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          referredDate: 2000-01-23T04:56:07.000+00:00
+          status: null
+      properties:
+        salesLead:
+          $ref: '#/components/schemas/SalesLead'
+      type: object
+    SalesLeadAttributeValueChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        fieldPath: fieldPath
+        description: description
+        correlationId: correlationId
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          salesLead:
+            statusChangeReason: statusChangeReason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            productSpecification:
+              '@referredType': '@referredType'
+              targetProductSchema:
+                '@baseType': '@baseType'
+                '@type': '@type'
+                '@schemaLocation': '@schemaLocation'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            '@type': '@type'
+            rating: rating
+            channel:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            type: type
+            marketingCampaign:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            marketSegment:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            product:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            prospectContact:
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            productOffering:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            estimatedRevenue:
+              unit: unit
+              value: 0.8008282
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            priority: null
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            name: name
+            salesOpportunity:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            category:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            referredDate: 2000-01-23T04:56:07.000+00:00
+            status: null
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        fieldPath:
+          description: The path identifying the object field concerned by this notification.
+          type: string
+        event:
+          $ref: '#/components/schemas/SalesLeadAttributeValueChangeEventPayload'
+      type: object
+    SalesLeadAttributeValueChangeEventPayload:
+      description: The event data structure
+      example:
+        salesLead:
+          statusChangeReason: statusChangeReason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          productSpecification:
+            '@referredType': '@referredType'
+            targetProductSchema:
+              '@baseType': '@baseType'
+              '@type': '@type'
+              '@schemaLocation': '@schemaLocation'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          '@type': '@type'
+          rating: rating
+          channel:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          type: type
+          marketingCampaign:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          marketSegment:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          product:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          prospectContact:
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          productOffering:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          estimatedRevenue:
+            unit: unit
+            value: 0.8008282
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          priority: null
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          name: name
+          salesOpportunity:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          category:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          referredDate: 2000-01-23T04:56:07.000+00:00
+          status: null
+      properties:
+        salesLead:
+          $ref: '#/components/schemas/SalesLead'
+      type: object
+    SalesLeadStateChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          salesLead:
+            statusChangeReason: statusChangeReason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            productSpecification:
+              '@referredType': '@referredType'
+              targetProductSchema:
+                '@baseType': '@baseType'
+                '@type': '@type'
+                '@schemaLocation': '@schemaLocation'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            '@type': '@type'
+            rating: rating
+            channel:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            type: type
+            marketingCampaign:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            marketSegment:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            product:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            prospectContact:
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            productOffering:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            estimatedRevenue:
+              unit: unit
+              value: 0.8008282
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            priority: null
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            name: name
+            salesOpportunity:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            category:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            referredDate: 2000-01-23T04:56:07.000+00:00
+            status: null
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/SalesLeadStateChangeEventPayload'
+      type: object
+    SalesLeadStateChangeEventPayload:
+      description: The event data structure
+      example:
+        salesLead:
+          statusChangeReason: statusChangeReason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          productSpecification:
+            '@referredType': '@referredType'
+            targetProductSchema:
+              '@baseType': '@baseType'
+              '@type': '@type'
+              '@schemaLocation': '@schemaLocation'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          '@type': '@type'
+          rating: rating
+          channel:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          type: type
+          marketingCampaign:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          marketSegment:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          product:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          prospectContact:
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          productOffering:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          estimatedRevenue:
+            unit: unit
+            value: 0.8008282
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          priority: null
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          name: name
+          salesOpportunity:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          category:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          referredDate: 2000-01-23T04:56:07.000+00:00
+          status: null
+      properties:
+        salesLead:
+          $ref: '#/components/schemas/SalesLead'
+      type: object
+    SalesLeadDeleteEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          salesLead:
+            statusChangeReason: statusChangeReason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            productSpecification:
+              '@referredType': '@referredType'
+              targetProductSchema:
+                '@baseType': '@baseType'
+                '@type': '@type'
+                '@schemaLocation': '@schemaLocation'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            '@type': '@type'
+            rating: rating
+            channel:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            type: type
+            marketingCampaign:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            marketSegment:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            product:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            prospectContact:
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              mediumType: mediumType
+              '@schemaLocation': https://openapi-generator.tech
+              preferred: true
+              characteristic:
+                country: country
+                city: city
+                '@type': '@type'
+                contactType: contactType
+                socialNetworkId: socialNetworkId
+                emailAddress: emailAddress
+                phoneNumber: phoneNumber
+                stateOrProvince: stateOrProvince
+                '@baseType': '@baseType'
+                faxNumber: faxNumber
+                postCode: postCode
+                street1: street1
+                street2: street2
+                '@schemaLocation': https://openapi-generator.tech
+            productOffering:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            estimatedRevenue:
+              unit: unit
+              value: 0.8008282
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            priority: null
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            name: name
+            salesOpportunity:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            category:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+              version: version
+            referredDate: 2000-01-23T04:56:07.000+00:00
+            status: null
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/SalesLeadDeleteEventPayload'
+      type: object
+    SalesLeadDeleteEventPayload:
+      description: The event data structure
+      example:
+        salesLead:
+          statusChangeReason: statusChangeReason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          productSpecification:
+            '@referredType': '@referredType'
+            targetProductSchema:
+              '@baseType': '@baseType'
+              '@type': '@type'
+              '@schemaLocation': '@schemaLocation'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          '@type': '@type'
+          rating: rating
+          channel:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          type: type
+          marketingCampaign:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          marketSegment:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          product:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          prospectContact:
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            mediumType: mediumType
+            '@schemaLocation': https://openapi-generator.tech
+            preferred: true
+            characteristic:
+              country: country
+              city: city
+              '@type': '@type'
+              contactType: contactType
+              socialNetworkId: socialNetworkId
+              emailAddress: emailAddress
+              phoneNumber: phoneNumber
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              faxNumber: faxNumber
+              postCode: postCode
+              street1: street1
+              street2: street2
+              '@schemaLocation': https://openapi-generator.tech
+          productOffering:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          estimatedRevenue:
+            unit: unit
+            value: 0.8008282
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          priority: null
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          name: name
+          salesOpportunity:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          category:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            version: version
+          referredDate: 2000-01-23T04:56:07.000+00:00
+          status: null
+      properties:
+        salesLead:
+          $ref: '#/components/schemas/SalesLead'
+      type: object
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+x-original-swagger-version: "2.0"

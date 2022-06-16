@@ -1,0 +1,4787 @@
+openapi: 3.0.1
+info:
+  description: "**TMF API Reference : TMF - 683 Party Interaction**\n\n**Release :\
+    \ 19.5 - Oct 2019**\n\nThe Party Interaction Management API provides a mechanism\
+    \ to manage party interactions. Creation, update and retrieval. Including creation,\
+    \ update, retrieval, deletion and notification of event. \nA Party Interaction\
+    \ captures information about past interactions in order to re-use it in future\
+    \ ones. \nhis allows agents to serve users better by knowing the steps they went\
+    \ through. \nIt also allows customers to see better the actions they have performed\
+    \ and how they interacted with the service provider.\n\n\nCopyright © TM Forum\
+    \ 2019. All Rights Reserved\n\n\n"
+  title: Party Interaction
+  version: 4.0.0
+servers:
+- url: https://serverRoot/tmf-api/partyInteraction/v4/
+tags:
+- name: partyInteraction
+- name: notification listeners (client side)
+- name: events subscription
+paths:
+  /partyInteraction:
+    get:
+      description: This operation list or find PartyInteraction entities
+      operationId: listPartyInteraction
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PartyInteraction'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find PartyInteraction objects
+      tags:
+      - partyInteraction
+      x-eov-operation-handler: controllers/PartyInteractionController
+    post:
+      description: This operation creates a PartyInteraction entity.
+      operationId: createPartyInteraction
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PartyInteraction_Create'
+        description: The PartyInteraction to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PartyInteraction'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a PartyInteraction
+      tags:
+      - partyInteraction
+      x-codegen-request-body-name: partyInteraction
+      x-eov-operation-handler: controllers/PartyInteractionController
+  /partyInteraction/{id}:
+    delete:
+      description: This operation deletes a PartyInteraction entity.
+      operationId: deletePartyInteraction
+      parameters:
+      - description: Identifier of the PartyInteraction
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Deletes a PartyInteraction
+      tags:
+      - partyInteraction
+      x-eov-operation-handler: controllers/PartyInteractionController
+    get:
+      description: This operation retrieves a PartyInteraction entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrievePartyInteraction
+      parameters:
+      - description: Identifier of the PartyInteraction
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PartyInteraction'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a PartyInteraction by ID
+      tags:
+      - partyInteraction
+      x-eov-operation-handler: controllers/PartyInteractionController
+    patch:
+      description: This operation updates partially a PartyInteraction entity.
+      operationId: patchPartyInteraction
+      parameters:
+      - description: Identifier of the PartyInteraction
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PartyInteraction_Update'
+        description: The PartyInteraction to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PartyInteraction'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a PartyInteraction
+      tags:
+      - partyInteraction
+      x-codegen-request-body-name: partyInteraction
+      x-eov-operation-handler: controllers/PartyInteractionController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /listener/partyInteractionCreateEvent:
+    post:
+      description: Example of a client listener for receiving the notification PartyInteractionCreateEvent
+      operationId: listenToPartyInteractionCreateEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PartyInteractionCreateEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PartyInteractionCreateEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/partyInteractionAttributeValueChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification PartyInteractionAttributeValueChangeEvent
+      operationId: listenToPartyInteractionAttributeValueChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PartyInteractionAttributeValueChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PartyInteractionAttributeValueChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/partyInteractionDeleteEvent:
+    post:
+      description: Example of a client listener for receiving the notification PartyInteractionDeleteEvent
+      operationId: listenToPartyInteractionDeleteEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PartyInteractionDeleteEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PartyInteractionDeleteEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/partyInteractionStatusChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification PartyInteractionStatusChangeEvent
+      operationId: listenToPartyInteractionStatusChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PartyInteractionStatusChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PartyInteractionStatusChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+components:
+  schemas:
+    Attachment:
+      description: "Complements the description of an element (for instance a product)\
+        \ through video, pictures..."
+      properties:
+        id:
+          description: Unique identifier for this particular attachment
+          type: string
+        href:
+          description: URI for this Attachment
+          type: string
+        attachmentType:
+          description: "Attachment type such as video, picture"
+          type: string
+        content:
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64"
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        mimeType:
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          type: string
+        name:
+          description: The name of the attachment
+          type: string
+        url:
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)"
+          type: string
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    AttachmentRef:
+      description: "Attachment reference. An attachment complements the description\
+        \ of an element (for instance a product) through video, pictures"
+      properties:
+        id:
+          description: Unique-Identifier for this attachment
+          type: string
+        href:
+          description: URL serving as reference for the attachment resource
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        url:
+          description: Link to the attachment media/content
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    AttachmentRefOrValue:
+      description: "An attachment by value or by reference. For AttachmentRefOrValue,\
+        \ the attribute type,schemaLocation and referredType are related to the contained\
+        \ entity and not to AttchmentRefOrValue itself"
+      example:
+        '@referredType': '@referredType'
+        attachmentType: attachmentType
+        validFor:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        '@type': '@type'
+        description: description
+        mimeType: mimeType
+        content: content
+        url: url
+        size:
+          amount: 0.8008282
+          units: units
+        '@baseType': '@baseType'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier for this particular attachment
+          type: string
+        href:
+          description: URI for this Attachment
+          type: string
+        attachmentType:
+          description: "Attachment type such as video, picture"
+          type: string
+        content:
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64"
+          type: string
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        mimeType:
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          type: string
+        name:
+          description: The name of the attachment
+          type: string
+        url:
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)"
+          type: string
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      type: object
+    EntityRef:
+      description: Entity reference schema to be use for all entityRef class.
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    EntityValue:
+      description: Base entity value  schema for use in TMForum Open-APIs
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    InteractionItem:
+      example:
+        reason: reason
+        note:
+        - date: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          author: author
+          '@type': '@type'
+          id: id
+          text: text
+          '@schemaLocation': https://openapi-generator.tech
+        - date: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          author: author
+          '@type': '@type'
+          id: id
+          text: text
+          '@schemaLocation': https://openapi-generator.tech
+        item:
+          '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@type': '@type'
+        channel:
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        itemDate:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        creationDate: 2000-01-23T04:56:07.000+00:00
+        relatedParty:
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        resolution: resolution
+        attachment:
+        - '@referredType': '@referredType'
+          attachmentType: attachmentType
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          mimeType: mimeType
+          content: content
+          url: url
+          size:
+            amount: 0.8008282
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          attachmentType: attachmentType
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          mimeType: mimeType
+          content: content
+          url: url
+          size:
+            amount: 0.8008282
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@baseType': '@baseType'
+        id: id
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the interaction item
+          type: string
+        creationDate:
+          description: Date when the interaction item is created in the system
+          format: date-time
+          type: string
+        reason:
+          description: Reason why this item is referred
+          type: string
+        resolution:
+          description: Resolution of the interaction item
+          type: string
+        attachment:
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+          type: array
+        channel:
+          description: "Where the interaction took place (e.g.: web, mobile app, store,\
+            \ kiosk, etc.)"
+          items:
+            $ref: '#/components/schemas/RelatedChannel'
+          type: array
+        item:
+          $ref: '#/components/schemas/RelatedEntityRefOrValue'
+        itemDate:
+          $ref: '#/components/schemas/TimePeriod'
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    InteractionRelationship:
+      example:
+        relationshipType: relationshipType
+        '@baseType': '@baseType'
+        '@type': '@type'
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the referenced party interaction
+          type: string
+        href:
+          description: Hyperlink to access the referenced party interaction
+          type: string
+        relationshipType:
+          description: Type of the interaction relationship
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    Note:
+      description: Extra information about a given entity
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        '@baseType': '@baseType'
+        author: author
+        '@type': '@type'
+        id: id
+        text: text
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: "Identifier of the note within its containing entity (may or\
+            \ may not be globally unique, depending on provider implementation)"
+          type: string
+        author:
+          description: Author of the note
+          type: string
+        date:
+          description: Date of the note
+          format: date-time
+          type: string
+        text:
+          description: Text of the note
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    PartyInteraction:
+      example:
+        reason: reason
+        note:
+        - date: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          author: author
+          '@type': '@type'
+          id: id
+          text: text
+          '@schemaLocation': https://openapi-generator.tech
+        - date: 2000-01-23T04:56:07.000+00:00
+          '@baseType': '@baseType'
+          author: author
+          '@type': '@type'
+          id: id
+          text: text
+          '@schemaLocation': https://openapi-generator.tech
+        interactionRelationship:
+        - relationshipType: relationshipType
+          '@baseType': '@baseType'
+          '@type': '@type'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - relationshipType: relationshipType
+          '@baseType': '@baseType'
+          '@type': '@type'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@type': '@type'
+        channel:
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        description: description
+        creationDate: 2000-01-23T04:56:07.000+00:00
+        relatedParty:
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        statusChangeDate: 2000-01-23T04:56:07.000+00:00
+        interactionDate:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        interactionItem:
+        - reason: reason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          item:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          channel:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          itemDate:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          resolution: resolution
+          attachment:
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          id: id
+          '@schemaLocation': https://openapi-generator.tech
+        - reason: reason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          item:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          channel:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          itemDate:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          resolution: resolution
+          attachment:
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          id: id
+          '@schemaLocation': https://openapi-generator.tech
+        attachment:
+        - '@referredType': '@referredType'
+          attachmentType: attachmentType
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          mimeType: mimeType
+          content: content
+          url: url
+          size:
+            amount: 0.8008282
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - '@referredType': '@referredType'
+          attachmentType: attachmentType
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          mimeType: mimeType
+          content: content
+          url: url
+          size:
+            amount: 0.8008282
+            units: units
+          '@baseType': '@baseType'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@baseType': '@baseType'
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+        direction: direction
+        status: status
+      properties:
+        id:
+          description: Unique identifier of the party interaction
+          type: string
+        href:
+          description: Hyperlink to access the party interaction
+          type: string
+        creationDate:
+          description: Date when the interaction is created in the system
+          format: date-time
+          type: string
+        description:
+          description: Description of the interaction
+          type: string
+        direction:
+          description: Specifies who started the interaction. It might be the party
+            or the enterprise exposing this API. Possible values are “inbound” and
+            “outbound”
+          type: string
+        reason:
+          description: Reason why the interaction happened
+          type: string
+        status:
+          description: "Status of the interaction (opened, inProgress, completed)"
+          type: string
+        statusChangeDate:
+          description: Last time the status changed
+          format: date-time
+          type: string
+        attachment:
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+          type: array
+        channel:
+          description: "Where the interaction took place (e.g. web, mobile app, store,\
+            \ kiosk, etc.)"
+          items:
+            $ref: '#/components/schemas/RelatedChannel'
+          type: array
+        interactionDate:
+          $ref: '#/components/schemas/TimePeriod'
+        interactionItem:
+          items:
+            $ref: '#/components/schemas/InteractionItem'
+          type: array
+        interactionRelationship:
+          items:
+            $ref: '#/components/schemas/InteractionRelationship'
+          type: array
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    PartyInteraction_Create:
+      description: "\nSkipped properties: id,href"
+      properties:
+        creationDate:
+          description: Date when the interaction is created in the system
+          format: date-time
+          type: string
+        description:
+          description: Description of the interaction
+          type: string
+        direction:
+          description: Specifies who started the interaction. It might be the party
+            or the enterprise exposing this API. Possible values are “inbound” and
+            “outbound”
+          type: string
+        reason:
+          description: Reason why the interaction happened
+          type: string
+        status:
+          description: "Status of the interaction (opened, inProgress, completed)"
+          type: string
+        statusChangeDate:
+          description: Last time the status changed
+          format: date-time
+          type: string
+        attachment:
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+          type: array
+        channel:
+          description: "Where the interaction took place (e.g. web, mobile app, store,\
+            \ kiosk, etc.)"
+          items:
+            $ref: '#/components/schemas/RelatedChannel'
+          minItems: 1
+          type: array
+        interactionDate:
+          $ref: '#/components/schemas/TimePeriod'
+        interactionItem:
+          items:
+            $ref: '#/components/schemas/InteractionItem'
+          type: array
+        interactionRelationship:
+          items:
+            $ref: '#/components/schemas/InteractionRelationship'
+          type: array
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - channel
+      - direction
+      - interactionDate
+      - reason
+      - status
+      type: object
+    PartyInteraction_Update:
+      description: "\nSkipped properties: id,href,direction"
+      properties:
+        creationDate:
+          description: Date when the interaction is created in the system
+          format: date-time
+          type: string
+        description:
+          description: Description of the interaction
+          type: string
+        reason:
+          description: Reason why the interaction happened
+          type: string
+        status:
+          description: "Status of the interaction (opened, inProgress, completed)"
+          type: string
+        statusChangeDate:
+          description: Last time the status changed
+          format: date-time
+          type: string
+        attachment:
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+          type: array
+        channel:
+          description: "Where the interaction took place (e.g. web, mobile app, store,\
+            \ kiosk, etc.)"
+          items:
+            $ref: '#/components/schemas/RelatedChannel'
+          type: array
+        interactionDate:
+          $ref: '#/components/schemas/TimePeriod'
+        interactionItem:
+          items:
+            $ref: '#/components/schemas/InteractionItem'
+          type: array
+        interactionRelationship:
+          items:
+            $ref: '#/components/schemas/InteractionRelationship'
+          type: array
+        note:
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
+        relatedParty:
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    PartyInteractionStatusExampleType:
+      description: Possible values for the status of party interaction
+      enum:
+      - open
+      - inProgress
+      - completed
+      type: string
+    Quantity:
+      description: An amount in a given unit
+      example:
+        amount: 0.8008282
+        units: units
+      properties:
+        amount:
+          default: 1.0
+          description: Numeric value in a given unit
+          format: float
+          type: number
+        units:
+          description: Unit
+          type: string
+      type: object
+    RelatedChannel:
+      description: "Related channel to another entity. May be online web, mobile app,\
+        \ social ,etc."
+      example:
+        '@referredType': '@referredType'
+        role: role
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the channel.
+          type: string
+        role:
+          description: Role playing by the channel.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - href
+      - id
+      type: object
+    RelatedEntityRefOrValue:
+      description: "A reference to an entity, where the type of the entity is not\
+        \ known in advance. A related entity defines a entity described by reference\
+        \ or by value linked to a specific entity. The polymorphic attributes @type,\
+        \ @schemaLocation & @referredType are related to the Entity and not the RelatedEntityRefOrValue\
+        \ class itself"
+      example:
+        '@referredType': '@referredType'
+        role: role
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        role:
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - role
+      type: object
+    RelatedParty:
+      description: Related Entity reference. A related party defines party or party
+        role linked to a specific entity.
+      example:
+        '@referredType': '@referredType'
+        role: role
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        role:
+          description: Role played by the related party
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - '@referredType'
+      - href
+      - id
+      type: object
+    TimePeriod:
+      description: "A period of time, either as a deadline (endDateTime only) a startDateTime\
+        \ only, or both"
+      example:
+        startDateTime: 2000-01-23T04:56:07.000+00:00
+        endDateTime: 2000-01-23T04:56:07.000+00:00
+      properties:
+        endDateTime:
+          description: "End of the time period, using IETC-RFC-3339 format"
+          format: date-time
+          type: string
+        startDateTime:
+          description: "Start of the time period, using IETC-RFC-3339 format. If you\
+            \ define a start, you must also define an end"
+          format: date-time
+          type: string
+      type: object
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    PartyInteractionCreateEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          partyInteraction:
+            reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            interactionRelationship:
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            interactionDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            interactionItem:
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            direction: direction
+            status: status
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/PartyInteractionCreateEventPayload'
+      type: object
+    PartyInteractionCreateEventPayload:
+      description: The event data structure
+      example:
+        partyInteraction:
+          reason: reason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          interactionRelationship:
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          channel:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          interactionDate:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          interactionItem:
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          attachment:
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          direction: direction
+          status: status
+      properties:
+        partyInteraction:
+          $ref: '#/components/schemas/PartyInteraction'
+      type: object
+    PartyInteractionAttributeValueChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        fieldPath: fieldPath
+        description: description
+        correlationId: correlationId
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          partyInteraction:
+            reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            interactionRelationship:
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            interactionDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            interactionItem:
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            direction: direction
+            status: status
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        fieldPath:
+          description: The path identifying the object field concerned by this notification.
+          type: string
+        event:
+          $ref: '#/components/schemas/PartyInteractionAttributeValueChangeEventPayload'
+      type: object
+    PartyInteractionAttributeValueChangeEventPayload:
+      description: The event data structure
+      example:
+        partyInteraction:
+          reason: reason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          interactionRelationship:
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          channel:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          interactionDate:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          interactionItem:
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          attachment:
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          direction: direction
+          status: status
+      properties:
+        partyInteraction:
+          $ref: '#/components/schemas/PartyInteraction'
+      type: object
+    PartyInteractionDeleteEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          partyInteraction:
+            reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            interactionRelationship:
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            interactionDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            interactionItem:
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            direction: direction
+            status: status
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/PartyInteractionDeleteEventPayload'
+      type: object
+    PartyInteractionDeleteEventPayload:
+      description: The event data structure
+      example:
+        partyInteraction:
+          reason: reason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          interactionRelationship:
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          channel:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          interactionDate:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          interactionItem:
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          attachment:
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          direction: direction
+          status: status
+      properties:
+        partyInteraction:
+          $ref: '#/components/schemas/PartyInteraction'
+      type: object
+    PartyInteractionStatusChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          partyInteraction:
+            reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            interactionRelationship:
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - relationshipType: relationshipType
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            description: description
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            statusChangeDate: 2000-01-23T04:56:07.000+00:00
+            interactionDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            interactionItem:
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            - reason: reason
+              note:
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              - date: 2000-01-23T04:56:07.000+00:00
+                '@baseType': '@baseType'
+                author: author
+                '@type': '@type'
+                id: id
+                text: text
+                '@schemaLocation': https://openapi-generator.tech
+              item:
+                '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@type': '@type'
+              channel:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              itemDate:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              creationDate: 2000-01-23T04:56:07.000+00:00
+              relatedParty:
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                role: role
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              resolution: resolution
+              attachment:
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              - '@referredType': '@referredType'
+                attachmentType: attachmentType
+                validFor:
+                  startDateTime: 2000-01-23T04:56:07.000+00:00
+                  endDateTime: 2000-01-23T04:56:07.000+00:00
+                '@type': '@type'
+                description: description
+                mimeType: mimeType
+                content: content
+                url: url
+                size:
+                  amount: 0.8008282
+                  units: units
+                '@baseType': '@baseType'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              id: id
+              '@schemaLocation': https://openapi-generator.tech
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+            direction: direction
+            status: status
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/PartyInteractionStatusChangeEventPayload'
+      type: object
+    PartyInteractionStatusChangeEventPayload:
+      description: The event data structure
+      example:
+        partyInteraction:
+          reason: reason
+          note:
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          - date: 2000-01-23T04:56:07.000+00:00
+            '@baseType': '@baseType'
+            author: author
+            '@type': '@type'
+            id: id
+            text: text
+            '@schemaLocation': https://openapi-generator.tech
+          interactionRelationship:
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - relationshipType: relationshipType
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          channel:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          description: description
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          relatedParty:
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          statusChangeDate: 2000-01-23T04:56:07.000+00:00
+          interactionDate:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          interactionItem:
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          - reason: reason
+            note:
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            - date: 2000-01-23T04:56:07.000+00:00
+              '@baseType': '@baseType'
+              author: author
+              '@type': '@type'
+              id: id
+              text: text
+              '@schemaLocation': https://openapi-generator.tech
+            item:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            channel:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            itemDate:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            relatedParty:
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            resolution: resolution
+            attachment:
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - '@referredType': '@referredType'
+              attachmentType: attachmentType
+              validFor:
+                startDateTime: 2000-01-23T04:56:07.000+00:00
+                endDateTime: 2000-01-23T04:56:07.000+00:00
+              '@type': '@type'
+              description: description
+              mimeType: mimeType
+              content: content
+              url: url
+              size:
+                amount: 0.8008282
+                units: units
+              '@baseType': '@baseType'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            id: id
+            '@schemaLocation': https://openapi-generator.tech
+          attachment:
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - '@referredType': '@referredType'
+            attachmentType: attachmentType
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            mimeType: mimeType
+            content: content
+            url: url
+            size:
+              amount: 0.8008282
+              units: units
+            '@baseType': '@baseType'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+          direction: direction
+          status: status
+      properties:
+        partyInteraction:
+          $ref: '#/components/schemas/PartyInteraction'
+      type: object
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+x-original-swagger-version: "2.0"

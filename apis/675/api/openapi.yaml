@@ -1,0 +1,1292 @@
+openapi: 3.0.1
+info:
+  description: "## TMF API Reference : TMF675 - Geographic Location\n### Release :\
+    \ 19.5\nA GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+    \ sub-types of Point (addresses and locations), MultiPoint, LineString (streets,\
+    \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+    \ tracts of land). Use the @type attribute to specify which of these is being\
+    \ specified by the geometry attribute."
+  title: API GeographicLocation
+  version: 4.0.0
+servers:
+- url: https://serverRoot/tmf-api/geographicLocation/v4/
+tags:
+- name: geographicLocation
+- name: notification listeners (client side)
+- name: events subscription
+paths:
+  /geographicLocation:
+    get:
+      description: This operation list or find GeographicLocation entities
+      operationId: listGeographicLocation
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GeographicLocation'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find GeographicLocation objects
+      tags:
+      - geographicLocation
+      x-eov-operation-handler: controllers/GeographicLocationController
+    post:
+      description: This operation creates a GeographicLocation entity.
+      operationId: createGeographicLocation
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicLocation_Create'
+        description: The GeographicLocation to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicLocation'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a GeographicLocation
+      tags:
+      - geographicLocation
+      x-codegen-request-body-name: geographicLocation
+      x-eov-operation-handler: controllers/GeographicLocationController
+  /geographicLocation/{id}:
+    delete:
+      description: This operation deletes a GeographicLocation entity.
+      operationId: deleteGeographicLocation
+      parameters:
+      - description: Identifier of the GeographicLocation
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Deletes a GeographicLocation
+      tags:
+      - geographicLocation
+      x-eov-operation-handler: controllers/GeographicLocationController
+    get:
+      description: This operation retrieves a GeographicLocation entity. Attribute
+        selection is enabled for all first level attributes.
+      operationId: retrieveGeographicLocation
+      parameters:
+      - description: Identifier of the GeographicLocation
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicLocation'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a GeographicLocation by ID
+      tags:
+      - geographicLocation
+      x-eov-operation-handler: controllers/GeographicLocationController
+    patch:
+      description: This operation updates partially a GeographicLocation entity.
+      operationId: patchGeographicLocation
+      parameters:
+      - description: Identifier of the GeographicLocation
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicLocation_Update'
+        description: The GeographicLocation to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicLocation'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a GeographicLocation
+      tags:
+      - geographicLocation
+      x-codegen-request-body-name: geographicLocation
+      x-eov-operation-handler: controllers/GeographicLocationController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /listener/geographicLocationCreateEvent:
+    post:
+      description: Example of a client listener for receiving the notification GeographicLocationCreateEvent
+      operationId: listenToGeographicLocationCreateEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicLocationCreateEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity GeographicLocationCreateEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/geographicLocationAttributeValueChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification GeographicLocationAttributeValueChangeEvent
+      operationId: listenToGeographicLocationAttributeValueChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicLocationAttributeValueChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity GeographicLocationAttributeValueChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/geographicLocationDeleteEvent:
+    post:
+      description: Example of a client listener for receiving the notification GeographicLocationDeleteEvent
+      operationId: listenToGeographicLocationDeleteEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicLocationDeleteEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity GeographicLocationDeleteEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+components:
+  schemas:
+    GeographicLocation:
+      allOf:
+      - $ref: '#/components/schemas/Place'
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute."
+      example:
+        '@type': GeoJsonPoint
+        bbox:
+        - 0.8008281904610115
+        - 0.8008281904610115
+        id: id
+        href: href
+      properties:
+        id:
+          description: Unique identifier of the geographic location
+          type: string
+        href:
+          description: An URI used to access to the geographic location resource
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          enum:
+          - GeoJsonPoint
+          - GeoJsonMultiPoint
+          - GeoJsonLineString
+          - GeoJsonMultiLineString
+          - GeoJsonPolygon
+          type: string
+        bbox:
+          description: A bounding box array that contains the geometry. The axes order
+            follows the axes order of the geometry
+          items:
+            type: number
+          type: array
+    GeographicLocation_Create:
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute.\nSkipped properties: id,href"
+      properties:
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          type: string
+      required:
+      - '@type'
+      type: object
+    GeographicLocation_Update:
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute.\nSkipped properties: id,href"
+      properties:
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          type: string
+      required:
+      - '@type'
+      type: object
+    Place:
+      description: Place reference. Place defines the places where the products are
+        sold or delivered.
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    GeographicLocationCreateEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          geographicLocation:
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            id: id
+            href: href
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/GeographicLocationCreateEventPayload'
+      type: object
+    GeographicLocationCreateEventPayload:
+      description: The event data structure
+      example:
+        geographicLocation:
+          '@type': GeoJsonPoint
+          bbox:
+          - 0.8008281904610115
+          - 0.8008281904610115
+          id: id
+          href: href
+      properties:
+        geographicLocation:
+          $ref: '#/components/schemas/GeographicLocation'
+      type: object
+    GeographicLocationAttributeValueChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        fieldPath: fieldPath
+        description: description
+        correlationId: correlationId
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          geographicLocation:
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            id: id
+            href: href
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        fieldPath:
+          description: The path identifying the object field concerned by this notification.
+          type: string
+        event:
+          $ref: '#/components/schemas/GeographicLocationAttributeValueChangeEventPayload'
+      type: object
+    GeographicLocationAttributeValueChangeEventPayload:
+      description: The event data structure
+      example:
+        geographicLocation:
+          '@type': GeoJsonPoint
+          bbox:
+          - 0.8008281904610115
+          - 0.8008281904610115
+          id: id
+          href: href
+      properties:
+        geographicLocation:
+          $ref: '#/components/schemas/GeographicLocation'
+      type: object
+    GeographicLocationDeleteEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          geographicLocation:
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            id: id
+            href: href
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/GeographicLocationDeleteEventPayload'
+      type: object
+    GeographicLocationDeleteEventPayload:
+      description: The event data structure
+      example:
+        geographicLocation:
+          '@type': GeoJsonPoint
+          bbox:
+          - 0.8008281904610115
+          - 0.8008281904610115
+          id: id
+          href: href
+      properties:
+        geographicLocation:
+          $ref: '#/components/schemas/GeographicLocation'
+      type: object
+    GeoJsonLineString:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonLineString_allOf'
+      description: "Container for GeoJson LineString: A collection of Points forming\
+        \ a connected line"
+    GeoJsonMultiLineString:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonMultiLineString_allOf'
+      description: "A container for GeoJSON MultiLineString: A collection of distinct\
+        \ LineStrings"
+    GeoJsonMultiPoint:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonMultiPoint_allOf'
+      description: "Container for GeoJSON MultiPoint: A collection of Points"
+    GeoJsonPoint:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonPoint_allOf'
+      description: "Container for a GeoJSON Point: A single position"
+    GeoJsonPolygon:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonPolygon_allOf'
+      description: "Container for GeoJSON Polygon: An array of linear rings"
+    LineString:
+      description: "GeoJSON: A collection of Points forming a connected line"
+      properties:
+        coordinates:
+          $ref: '#/components/schemas/lineString'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      type: object
+    MultiLineString:
+      description: A collection of distinct LineStrings
+      properties:
+        type:
+          type: string
+        coordinates:
+          items:
+            $ref: '#/components/schemas/lineString'
+          minItems: 1
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    MultiPoint:
+      description: A collection of Points
+      properties:
+        type:
+          type: string
+        coordinates:
+          description: "GeoJSON: An array of positions"
+          items:
+            $ref: '#/components/schemas/position'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    Point:
+      description: "GeoJSON: A single position"
+      properties:
+        type:
+          type: string
+        coordinates:
+          description: "GeoJSON: A single position"
+          items:
+            type: number
+          maxItems: 2
+          minItems: 2
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    Polygon:
+      description: An array of linear rings
+      properties:
+        type:
+          type: string
+        coordinates:
+          description: "GeoJSON: An array of linear rings"
+          items:
+            $ref: '#/components/schemas/linearRing'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    position:
+      description: "GeoJSON: A single position"
+      items:
+        type: number
+      maxItems: 2
+      minItems: 2
+      type: array
+    positionArray:
+      description: "GeoJSON: An array of positions"
+      items:
+        $ref: '#/components/schemas/position'
+      type: array
+    lineString:
+      allOf:
+      - $ref: '#/components/schemas/positionArray'
+      - type: object
+      description: "GeoJSON: An array of two or more positions"
+    linearRing:
+      allOf:
+      - $ref: '#/components/schemas/positionArray'
+      - type: object
+      description: "GeoJSON: An array of four positions where the first equals the\
+        \ last"
+    polygon:
+      description: "GeoJSON: An array of linear rings"
+      items:
+        $ref: '#/components/schemas/linearRing'
+      type: array
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+    GeoJsonLineString_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/LineString'
+      type: object
+    GeoJsonMultiLineString_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/MultiLineString'
+      type: object
+    GeoJsonMultiPoint_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/MultiPoint'
+      type: object
+    GeoJsonPoint_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/Point'
+      type: object
+    GeoJsonPolygon_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/Polygon'
+      type: object
+x-original-swagger-version: "2.0"

@@ -1,0 +1,3233 @@
+openapi: 3.0.1
+info:
+  description: "## TMF API Reference : TMF 672 - User Roles And Permissions\n\nThis\
+    \ API is used to manage the user account with which the customer or staff can\
+    \ log-in and log-off the system and the permission for the user to enter or operate\
+    \ the special information."
+  title: User Roles And Permissions
+  version: 4.0.0
+servers:
+- url: https://serverRoot/rolesAndPermissions/v4/
+tags:
+- name: permission
+- name: userRole
+- name: notification listeners (client side)
+- name: events subscription
+paths:
+  /permission:
+    get:
+      description: This operation list or find Permission entities
+      operationId: listPermission
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Permission'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find Permission objects
+      tags:
+      - permission
+      x-eov-operation-handler: controllers/PermissionController
+    post:
+      description: This operation creates a Permission entity.
+      operationId: createPermission
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/Permission_Create'
+        description: The Permission to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Permission'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a Permission
+      tags:
+      - permission
+      x-codegen-request-body-name: permission
+      x-eov-operation-handler: controllers/PermissionController
+  /permission/{id}:
+    get:
+      description: This operation retrieves a Permission entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrievePermission
+      parameters:
+      - description: Identifier of the Permission
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Permission'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a Permission by ID
+      tags:
+      - permission
+      x-eov-operation-handler: controllers/PermissionController
+    patch:
+      description: This operation updates partially a Permission entity.
+      operationId: patchPermission
+      parameters:
+      - description: Identifier of the Permission
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/Permission_Update'
+        description: The Permission to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Permission'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a Permission
+      tags:
+      - permission
+      x-codegen-request-body-name: permission
+      x-eov-operation-handler: controllers/PermissionController
+  /userRole:
+    get:
+      description: This operation list or find UserRole entities
+      operationId: listUserRole
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserRole'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find UserRole objects
+      tags:
+      - userRole
+      x-eov-operation-handler: controllers/UserRoleController
+    post:
+      description: This operation creates a UserRole entity.
+      operationId: createUserRole
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/UserRole_Create'
+        description: The UserRole to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a UserRole
+      tags:
+      - userRole
+      x-codegen-request-body-name: userRole
+      x-eov-operation-handler: controllers/UserRoleController
+  /userRole/{id}:
+    get:
+      description: This operation retrieves a UserRole entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrieveUserRole
+      parameters:
+      - description: Identifier of the UserRole
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a UserRole by ID
+      tags:
+      - userRole
+      x-eov-operation-handler: controllers/UserRoleController
+    patch:
+      description: This operation updates partially a UserRole entity.
+      operationId: patchUserRole
+      parameters:
+      - description: Identifier of the UserRole
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/UserRole_Update'
+        description: The UserRole to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a UserRole
+      tags:
+      - userRole
+      x-codegen-request-body-name: userRole
+      x-eov-operation-handler: controllers/UserRoleController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /listener/permissionCreateEvent:
+    post:
+      description: Example of a client listener for receiving the notification PermissionCreateEvent
+      operationId: listenToPermissionCreateEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PermissionCreateEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PermissionCreateEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/permissionAttributeValueChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification PermissionAttributeValueChangeEvent
+      operationId: listenToPermissionAttributeValueChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PermissionAttributeValueChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PermissionAttributeValueChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/permissionStateChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification PermissionStateChangeEvent
+      operationId: listenToPermissionStateChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PermissionStateChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PermissionStateChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/permissionDeleteEvent:
+    post:
+      description: Example of a client listener for receiving the notification PermissionDeleteEvent
+      operationId: listenToPermissionDeleteEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PermissionDeleteEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity PermissionDeleteEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/userRoleCreateEvent:
+    post:
+      description: Example of a client listener for receiving the notification UserRoleCreateEvent
+      operationId: listenToUserRoleCreateEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/UserRoleCreateEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity UserRoleCreateEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/userRoleAttributeValueChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification UserRoleAttributeValueChangeEvent
+      operationId: listenToUserRoleAttributeValueChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/UserRoleAttributeValueChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity UserRoleAttributeValueChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/userRoleStateChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification UserRoleStateChangeEvent
+      operationId: listenToUserRoleStateChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/UserRoleStateChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity UserRoleStateChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+  /listener/userRoleDeleteEvent:
+    post:
+      description: Example of a client listener for receiving the notification UserRoleDeleteEvent
+      operationId: listenToUserRoleDeleteEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/UserRoleDeleteEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity UserRoleDeleteEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+components:
+  schemas:
+    AssetUserRole:
+      description: The AssetUserRole is the detailed information concerning an individual
+        user role
+      example:
+        manageableAsset:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@baseType': '@baseType'
+        '@type': '@type'
+        userRole:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        manageableAsset:
+          $ref: '#/components/schemas/EntityRef'
+        userRole:
+          $ref: '#/components/schemas/UserRoleRef'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - manageableAsset
+      - userRole
+      type: object
+    Entitlement:
+      description: An Entitlement defines access levels to operate over a given function
+        that can be included in an asset.
+      example:
+        '@baseType': '@baseType'
+        '@type': '@type'
+        function: function
+        action: action
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        action:
+          description: Level of access granted as part of the permission.
+          type: string
+        function:
+          description: Specific function that can be managed over a given asset.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    EntityRef:
+      description: Entity reference schema to be use for all entityRef class.
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    Permission:
+      description: The Permission resource represents the entitlement given by an
+        individual (granter) to another individual (user) to get access to a set of
+        his owned manageable assets. One single permission resource can hold information
+        referring to privileges granted for multiple manageable assets.
+      example:
+        assetUserRole:
+        - manageableAsset:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          '@type': '@type'
+          userRole:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@schemaLocation': https://openapi-generator.tech
+        - manageableAsset:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          '@type': '@type'
+          userRole:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@schemaLocation': https://openapi-generator.tech
+        '@baseType': '@baseType'
+        validFor:
+          startDateTime: 2000-01-23T04:56:07.000+00:00
+          endDateTime: 2000-01-23T04:56:07.000+00:00
+        '@type': '@type'
+        description: description
+        id: id
+        href: href
+        privilege:
+        - manageableAsset:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          '@type': '@type'
+          function: function
+          action: action
+          '@schemaLocation': https://openapi-generator.tech
+        - manageableAsset:
+            '@referredType': '@referredType'
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          '@type': '@type'
+          function: function
+          action: action
+          '@schemaLocation': https://openapi-generator.tech
+        creationDate: 2000-01-23T04:56:07.000+00:00
+        '@schemaLocation': https://openapi-generator.tech
+        granter:
+          '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        user:
+          '@referredType': '@referredType'
+          role: role
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the permission
+          type: string
+        href:
+          description: Hypertext Reference of the permission
+          type: string
+        creationDate:
+          description: Date when the payment was performed
+          format: date-time
+          type: string
+        description:
+          description: Text describing the contents of the payment
+          type: string
+        assetUserRole:
+          items:
+            $ref: '#/components/schemas/AssetUserRole'
+          type: array
+        granter:
+          $ref: '#/components/schemas/RelatedParty'
+        privilege:
+          items:
+            $ref: '#/components/schemas/Privilege'
+          type: array
+        user:
+          $ref: '#/components/schemas/RelatedParty'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - user
+      - validFor
+      type: object
+    Permission_Create:
+      description: "The Permission resource represents the entitlement given by an\
+        \ individual (granter) to another individual (user) to get access to a set\
+        \ of his owned manageable assets. One single permission resource can hold\
+        \ information referring to privileges granted for multiple manageable assets.\n\
+        Skipped properties: id,href,creationDate"
+      properties:
+        description:
+          description: Text describing the contents of the payment
+          type: string
+        assetUserRole:
+          items:
+            $ref: '#/components/schemas/AssetUserRole'
+          type: array
+        granter:
+          $ref: '#/components/schemas/RelatedParty'
+        privilege:
+          items:
+            $ref: '#/components/schemas/Privilege'
+          type: array
+        user:
+          $ref: '#/components/schemas/RelatedParty'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - user
+      - validFor
+      type: object
+    Permission_Update:
+      description: "The Permission resource represents the entitlement given by an\
+        \ individual (granter) to another individual (user) to get access to a set\
+        \ of his owned manageable assets. One single permission resource can hold\
+        \ information referring to privileges granted for multiple manageable assets.\n\
+        Skipped properties: id,href,creationDate"
+      properties:
+        description:
+          description: Text describing the contents of the payment
+          type: string
+        assetUserRole:
+          items:
+            $ref: '#/components/schemas/AssetUserRole'
+          type: array
+        granter:
+          $ref: '#/components/schemas/RelatedParty'
+        privilege:
+          items:
+            $ref: '#/components/schemas/Privilege'
+          type: array
+        user:
+          $ref: '#/components/schemas/RelatedParty'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - user
+      - validFor
+      type: object
+    Privilege:
+      description: A Privilege is a detailed information concerning an individual
+        access entitlement.
+      example:
+        manageableAsset:
+          '@referredType': '@referredType'
+          '@baseType': '@baseType'
+          '@type': '@type'
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@baseType': '@baseType'
+        '@type': '@type'
+        function: function
+        action: action
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        action:
+          description: Level of access granted as part of the permission.
+          type: string
+        function:
+          description: Specific function that can be managed over a given asset.
+          type: string
+        manageableAsset:
+          $ref: '#/components/schemas/EntityRef'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - action
+      - function
+      - manageableAsset
+      type: object
+    RelatedParty:
+      description: Related Entity reference. A related party defines party or party
+        role linked to a specific entity.
+      example:
+        '@referredType': '@referredType'
+        role: role
+        '@baseType': '@baseType'
+        '@type': '@type'
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of a related entity.
+          type: string
+        href:
+          description: Reference of the related entity.
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        role:
+          description: Role played by the related party
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - '@referredType'
+      - id
+      type: object
+    TimePeriod:
+      description: "A period of time, either as a deadline (endDateTime only) a startDateTime\
+        \ only, or both"
+      example:
+        startDateTime: 2000-01-23T04:56:07.000+00:00
+        endDateTime: 2000-01-23T04:56:07.000+00:00
+      properties:
+        endDateTime:
+          description: "End of the time period, using IETC-RFC-3339 format"
+          format: date-time
+          type: string
+        startDateTime:
+          description: "Start of the time period, using IETC-RFC-3339 format. If you\
+            \ define a start, you must also define an end"
+          format: date-time
+          type: string
+      type: object
+    UserRole:
+      description: A UserRole defines access levels to operate over a given function
+        that can be included in an asset.
+      example:
+        involvementRole: involvementRole
+        '@baseType': '@baseType'
+        '@type': '@type'
+        entitlement:
+        - '@baseType': '@baseType'
+          '@type': '@type'
+          function: function
+          action: action
+          '@schemaLocation': https://openapi-generator.tech
+        - '@baseType': '@baseType'
+          '@type': '@type'
+          function: function
+          action: action
+          '@schemaLocation': https://openapi-generator.tech
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the userRole
+          type: string
+        href:
+          description: Unique URI used to access to the userRole resource
+          type: string
+        involvementRole:
+          description: "Indication of the part that a user plays in its involvement\
+            \ with a manageable asset (product, service or resource)"
+          type: string
+        entitlement:
+          items:
+            $ref: '#/components/schemas/Entitlement'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    UserRole_Create:
+      description: "A UserRole defines access levels to operate over a given function\
+        \ that can be included in an asset.\nSkipped properties: id,href"
+      properties:
+        involvementRole:
+          description: "Indication of the part that a user plays in its involvement\
+            \ with a manageable asset (product, service or resource)"
+          type: string
+        entitlement:
+          items:
+            $ref: '#/components/schemas/Entitlement'
+          minItems: 1
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - entitlement
+      type: object
+    UserRole_Update:
+      description: "A UserRole defines access levels to operate over a given function\
+        \ that can be included in an asset.\nSkipped properties: id,href"
+      properties:
+        involvementRole:
+          description: "Indication of the part that a user plays in its involvement\
+            \ with a manageable asset (product, service or resource)"
+          type: string
+        entitlement:
+          items:
+            $ref: '#/components/schemas/Entitlement'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    UserRoleRef:
+      description: A UserRoleRef is a detailed information concerning an individual
+        access entitlement.
+      example:
+        '@referredType': '@referredType'
+        '@baseType': '@baseType'
+        '@type': '@type'
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the user role
+          type: string
+        href:
+          description: Hypertext Reference of the user role.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    PermissionCreateEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          permission:
+            assetUserRole:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            id: id
+            href: href
+            privilege:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            '@schemaLocation': https://openapi-generator.tech
+            granter:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            user:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/PermissionCreateEventPayload'
+      type: object
+    PermissionCreateEventPayload:
+      description: The event data structure
+      example:
+        permission:
+          assetUserRole:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          id: id
+          href: href
+          privilege:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          '@schemaLocation': https://openapi-generator.tech
+          granter:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          user:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+      properties:
+        permission:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    PermissionAttributeValueChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        fieldPath: fieldPath
+        description: description
+        correlationId: correlationId
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          permission:
+            assetUserRole:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            id: id
+            href: href
+            privilege:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            '@schemaLocation': https://openapi-generator.tech
+            granter:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            user:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        fieldPath:
+          description: The path identifying the object field concerned by this notification.
+          type: string
+        event:
+          $ref: '#/components/schemas/PermissionAttributeValueChangeEventPayload'
+      type: object
+    PermissionAttributeValueChangeEventPayload:
+      description: The event data structure
+      example:
+        permission:
+          assetUserRole:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          id: id
+          href: href
+          privilege:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          '@schemaLocation': https://openapi-generator.tech
+          granter:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          user:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+      properties:
+        permission:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    PermissionStateChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          permission:
+            assetUserRole:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            id: id
+            href: href
+            privilege:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            '@schemaLocation': https://openapi-generator.tech
+            granter:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            user:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/PermissionStateChangeEventPayload'
+      type: object
+    PermissionStateChangeEventPayload:
+      description: The event data structure
+      example:
+        permission:
+          assetUserRole:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          id: id
+          href: href
+          privilege:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          '@schemaLocation': https://openapi-generator.tech
+          granter:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          user:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+      properties:
+        permission:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    PermissionDeleteEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          permission:
+            assetUserRole:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              userRole:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            validFor:
+              startDateTime: 2000-01-23T04:56:07.000+00:00
+              endDateTime: 2000-01-23T04:56:07.000+00:00
+            '@type': '@type'
+            description: description
+            id: id
+            href: href
+            privilege:
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - manageableAsset:
+                '@referredType': '@referredType'
+                '@baseType': '@baseType'
+                '@type': '@type'
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://openapi-generator.tech
+              '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            creationDate: 2000-01-23T04:56:07.000+00:00
+            '@schemaLocation': https://openapi-generator.tech
+            granter:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            user:
+              '@referredType': '@referredType'
+              role: role
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/PermissionDeleteEventPayload'
+      type: object
+    PermissionDeleteEventPayload:
+      description: The event data structure
+      example:
+        permission:
+          assetUserRole:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            userRole:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@schemaLocation': https://openapi-generator.tech
+          '@baseType': '@baseType'
+          validFor:
+            startDateTime: 2000-01-23T04:56:07.000+00:00
+            endDateTime: 2000-01-23T04:56:07.000+00:00
+          '@type': '@type'
+          description: description
+          id: id
+          href: href
+          privilege:
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - manageableAsset:
+              '@referredType': '@referredType'
+              '@baseType': '@baseType'
+              '@type': '@type'
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          creationDate: 2000-01-23T04:56:07.000+00:00
+          '@schemaLocation': https://openapi-generator.tech
+          granter:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          user:
+            '@referredType': '@referredType'
+            role: role
+            '@baseType': '@baseType'
+            '@type': '@type'
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+      properties:
+        permission:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    UserRoleCreateEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          userRole:
+            involvementRole: involvementRole
+            '@baseType': '@baseType'
+            '@type': '@type'
+            entitlement:
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/UserRoleCreateEventPayload'
+      type: object
+    UserRoleCreateEventPayload:
+      description: The event data structure
+      example:
+        userRole:
+          involvementRole: involvementRole
+          '@baseType': '@baseType'
+          '@type': '@type'
+          entitlement:
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+    UserRoleAttributeValueChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        fieldPath: fieldPath
+        description: description
+        correlationId: correlationId
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          userRole:
+            involvementRole: involvementRole
+            '@baseType': '@baseType'
+            '@type': '@type'
+            entitlement:
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        fieldPath:
+          description: The path identifying the object field concerned by this notification.
+          type: string
+        event:
+          $ref: '#/components/schemas/UserRoleAttributeValueChangeEventPayload'
+      type: object
+    UserRoleAttributeValueChangeEventPayload:
+      description: The event data structure
+      example:
+        userRole:
+          involvementRole: involvementRole
+          '@baseType': '@baseType'
+          '@type': '@type'
+          entitlement:
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+    UserRoleStateChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          userRole:
+            involvementRole: involvementRole
+            '@baseType': '@baseType'
+            '@type': '@type'
+            entitlement:
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/UserRoleStateChangeEventPayload'
+      type: object
+    UserRoleStateChangeEventPayload:
+      description: The event data structure
+      example:
+        userRole:
+          involvementRole: involvementRole
+          '@baseType': '@baseType'
+          '@type': '@type'
+          entitlement:
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+    UserRoleDeleteEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        id: id
+        href: href
+        eventType: eventType
+        title: title
+        priority: priority
+        event:
+          userRole:
+            involvementRole: involvementRole
+            '@baseType': '@baseType'
+            '@type': '@type'
+            entitlement:
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            - '@baseType': '@baseType'
+              '@type': '@type'
+              function: function
+              action: action
+              '@schemaLocation': https://openapi-generator.tech
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identifier of the Process flow
+          type: string
+        href:
+          description: Reference of the ProcessFlow
+          type: string
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+        event:
+          $ref: '#/components/schemas/UserRoleDeleteEventPayload'
+      type: object
+    UserRoleDeleteEventPayload:
+      description: The event data structure
+      example:
+        userRole:
+          involvementRole: involvementRole
+          '@baseType': '@baseType'
+          '@type': '@type'
+          entitlement:
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          - '@baseType': '@baseType'
+            '@type': '@type'
+            function: function
+            action: action
+            '@schemaLocation': https://openapi-generator.tech
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+      type: object
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+x-original-swagger-version: "2.0"

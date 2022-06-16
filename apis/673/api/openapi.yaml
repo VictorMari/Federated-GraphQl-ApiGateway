@@ -1,0 +1,2419 @@
+openapi: 3.0.1
+info:
+  description: "## TMF API Reference : TMF 673 - Place - Geographic Address Management\n\
+    ### Release : 19.5 - January 2020\n\nThe Geographic Address API provides a standardized\
+    \ client interface to an Address management system.\nIt allows looking for worldwide\
+    \ addresses.\nIt can also be used to validate geographic address data, to be sure\
+    \ that it corresponds to a real address.\n\n### Resources\n- GeographicAddress\n\
+    - GeographicSubAddress\n- GeographicAddressValidation\n- Hub\n\n### Operations\n\
+    Geographic Address Management API performs the following operations :\n- Retrieve\
+    \ a geographic address or a collection of geographic addresses\n- Retrieve a geographic\
+    \ sub-address\n- Create a geographic address validation\n- Retrieve, update and\
+    \ delete an existing  geographic address validation\n- Notify events on these\
+    \ resources"
+  title: API Place - GeographicAddress
+  version: 4.0.1
+servers:
+- url: https://serverRoot/tmf-api/geographicAddressManagement/v4/
+tags:
+- name: geographicAddressValidation
+- name: geographicAddress
+- name: geographicSubAddress
+- name: notification listeners (client side)
+- name: events subscription
+paths:
+  /geographicAddressValidation:
+    get:
+      description: This operation list or find GeographicAddressValidation entities
+      operationId: listGeographicAddressValidation
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GeographicAddressValidation'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find GeographicAddressValidation objects
+      tags:
+      - geographicAddressValidation
+      x-eov-operation-handler: controllers/GeographicAddressValidationController
+    post:
+      description: This operation creates a GeographicAddressValidation entity.
+      operationId: createGeographicAddressValidation
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicAddressValidation_Create'
+        description: The GeographicAddressValidation to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicAddressValidation'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Creates a GeographicAddressValidation
+      tags:
+      - geographicAddressValidation
+      x-codegen-request-body-name: geographicAddressValidation
+      x-eov-operation-handler: controllers/GeographicAddressValidationController
+  /geographicAddressValidation/{id}:
+    get:
+      description: This operation retrieves a GeographicAddressValidation entity.
+        Attribute selection is enabled for all first level attributes.
+      operationId: retrieveGeographicAddressValidation
+      parameters:
+      - description: Identifier of the GeographicAddressValidation
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicAddressValidation'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a GeographicAddressValidation by ID
+      tags:
+      - geographicAddressValidation
+      x-eov-operation-handler: controllers/GeographicAddressValidationController
+    patch:
+      description: This operation updates partially a GeographicAddressValidation
+        entity.
+      operationId: patchGeographicAddressValidation
+      parameters:
+      - description: Identifier of the GeographicAddressValidation
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicAddressValidation_Update'
+        description: The GeographicAddressValidation to be updated
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicAddressValidation'
+          description: Updated
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Updates partially a GeographicAddressValidation
+      tags:
+      - geographicAddressValidation
+      x-codegen-request-body-name: geographicAddressValidation
+      x-eov-operation-handler: controllers/GeographicAddressValidationController
+  /geographicAddress:
+    get:
+      description: This operation list or find GeographicAddress entities
+      operationId: listGeographicAddress
+      parameters:
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GeographicAddress'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find GeographicAddress objects
+      tags:
+      - geographicAddress
+      x-eov-operation-handler: controllers/GeographicAddressController
+  /geographicAddress/{id}:
+    get:
+      description: This operation retrieves a GeographicAddress entity. Attribute
+        selection is enabled for all first level attributes.
+      operationId: retrieveGeographicAddress
+      parameters:
+      - description: Identifier of the GeographicAddress
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicAddress'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a GeographicAddress by ID
+      tags:
+      - geographicAddress
+      x-eov-operation-handler: controllers/GeographicAddressController
+  /geographicAddress/{geographicAddressId}/geographicSubAddress:
+    get:
+      description: This operation list or find GeographicSubAddress entities
+      operationId: listGeographicSubAddress
+      parameters:
+      - description: Identifier of the parent GeographicAddress entity
+        in: path
+        name: geographicAddressId
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to be provided in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Requested index for start of resources to be provided in response
+        in: query
+        name: offset
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GeographicSubAddress'
+                type: array
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: List or find GeographicSubAddress objects
+      tags:
+      - geographicSubAddress
+      x-eov-operation-handler: controllers/GeographicSubAddressController
+  /geographicAddress/{geographicAddressId}/geographicSubAddress/{id}:
+    get:
+      description: This operation retrieves a GeographicSubAddress entity. Attribute
+        selection is enabled for all first level attributes.
+      operationId: retrieveGeographicSubAddress
+      parameters:
+      - description: Identifier of the parent GeographicAddress entity
+        in: path
+        name: geographicAddressId
+        required: true
+        schema:
+          type: string
+      - description: Identifier of the GeographicSubAddress
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Comma-separated properties to provide in response
+        in: query
+        name: fields
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GeographicSubAddress'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Retrieves a GeographicSubAddress by ID
+      tags:
+      - geographicSubAddress
+      x-eov-operation-handler: controllers/GeographicSubAddressController
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - events subscription
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method not allowed
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - events subscription
+      x-eov-operation-handler: controllers/EventsSubscriptionController
+  /listener/geographicAddressValidationStateChangeEvent:
+    post:
+      description: Example of a client listener for receiving the notification GeographicAddressValidationStateChangeEvent
+      operationId: listenToGeographicAddressValidationStateChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/GeographicAddressValidationStateChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Notified
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not allowed
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Client listener for entity GeographicAddressValidationStateChangeEvent
+      tags:
+      - notification listeners (client side)
+      x-codegen-request-body-name: data
+      x-eov-operation-handler: controllers/NotificationListenersClientSideController
+components:
+  schemas:
+    Addressable:
+      description: Base schema for adressable entities
+      properties:
+        id:
+          description: unique identifier
+          type: string
+        href:
+          description: Hyperlink reference
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    EntityRef:
+      description: Entity reference schema to be use for all entityRef class.
+      properties:
+        id:
+          description: unique identifier
+          type: string
+        href:
+          description: Hyperlink reference
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          example: ResourceSpecification
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          example: https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          example: LogicalResourceSpecification
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    Extensible:
+      description: Base Extensible schema for use in TMForum Open-APIs
+      properties:
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          example: ResourceSpecification
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          example: https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          example: LogicalResourceSpecification
+          type: string
+      type: object
+    GeographicAddress:
+      description: "Structured textual way of describing how to find a Property in\
+        \ an urban area (country properties are often defined differently).\nNote\
+        \ : Address corresponds to SID UrbanPropertyAddress"
+      example:
+        country: country
+        streetType: streetType
+        geographicLocation:
+          '@referredType': '@referredType'
+          '@baseType': ResourceSpecification
+          '@type': GeoJsonPoint
+          bbox:
+          - 0.8008281904610115
+          - 0.8008281904610115
+          name: name
+          id: id
+          href: href
+          '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+        city: city
+        streetNr: streetNr
+        '@type': '@type'
+        locality: locality
+        postcode: postcode
+        streetNrLast: streetNrLast
+        streetNrSuffix: streetNrSuffix
+        streetName: streetName
+        stateOrProvince: stateOrProvince
+        '@baseType': '@baseType'
+        name: name
+        streetNrLastSuffix: streetNrLastSuffix
+        streetSuffix: streetSuffix
+        geographicSubAddress:
+        - subUnitNumber: subUnitNumber
+          '@type': '@type'
+          buildingName: buildingName
+          '@baseType': '@baseType'
+          levelType: levelType
+          subUnitType: subUnitType
+          levelNumber: levelNumber
+          name: name
+          subAddressType: subAddressType
+          id: id
+          href: href
+          privateStreetNumber: privateStreetNumber
+          '@schemaLocation': https://openapi-generator.tech
+          privateStreetName: privateStreetName
+        - subUnitNumber: subUnitNumber
+          '@type': '@type'
+          buildingName: buildingName
+          '@baseType': '@baseType'
+          levelType: levelType
+          subUnitType: subUnitType
+          levelNumber: levelNumber
+          name: name
+          subAddressType: subAddressType
+          id: id
+          href: href
+          privateStreetNumber: privateStreetNumber
+          '@schemaLocation': https://openapi-generator.tech
+          privateStreetName: privateStreetName
+        id: id
+        href: href
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        city:
+          description: City that the address is in
+          type: string
+        country:
+          description: Country that the address is in
+          type: string
+        locality:
+          description: "An area of defined or undefined boundaries within a local\
+            \ authority or other legislatively defined area, usually rural or semi\
+            \ rural in nature. [ANZLIC-STREET], or a suburb, a bounded locality within\
+            \ a city, town or shire principally of urban character [ANZLICSTREET]"
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        postcode:
+          description: "descriptor for a postal delivery area, used to speed and simplify\
+            \ the delivery of mail (also know as zipcode)"
+          type: string
+        stateOrProvince:
+          description: the State or Province that the address is in
+          type: string
+        streetName:
+          description: Name of the street or other street type
+          type: string
+        streetNr:
+          description: Number identifying a specific property on a public street.
+            It may be combined with streetNrLast for ranged addresses
+          type: string
+        streetNrLast:
+          description: Last number in a range of street numbers allocated to a property
+          type: string
+        streetNrLastSuffix:
+          description: Last street number suffix for a ranged address
+          type: string
+        streetNrSuffix:
+          description: the first street number suffix
+          type: string
+        streetSuffix:
+          description: A modifier denoting a relative direction
+          type: string
+        streetType:
+          description: "alley, avenue, boulevard, brae, crescent, drive, highway,\
+            \ lane, terrace, parade, place, tarn, way, wharf "
+          type: string
+        geographicLocation:
+          $ref: '#/components/schemas/GeographicLocationRefOrValue'
+        geographicSubAddress:
+          items:
+            $ref: '#/components/schemas/GeographicSubAddress'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    GeographicAddressValidation:
+      description: This resource is used to manage address validation request and
+        response
+      example:
+        validationResult: validationResult
+        '@baseType': '@baseType'
+        alternateGeographicAddress:
+        - country: country
+          streetType: streetType
+          geographicLocation:
+            '@referredType': '@referredType'
+            '@baseType': ResourceSpecification
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          city: city
+          streetNr: streetNr
+          '@type': '@type'
+          locality: locality
+          postcode: postcode
+          streetNrLast: streetNrLast
+          streetNrSuffix: streetNrSuffix
+          streetName: streetName
+          stateOrProvince: stateOrProvince
+          '@baseType': '@baseType'
+          name: name
+          streetNrLastSuffix: streetNrLastSuffix
+          streetSuffix: streetSuffix
+          geographicSubAddress:
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        - country: country
+          streetType: streetType
+          geographicLocation:
+            '@referredType': '@referredType'
+            '@baseType': ResourceSpecification
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          city: city
+          streetNr: streetNr
+          '@type': '@type'
+          locality: locality
+          postcode: postcode
+          streetNrLast: streetNrLast
+          streetNrSuffix: streetNrSuffix
+          streetName: streetName
+          stateOrProvince: stateOrProvince
+          '@baseType': '@baseType'
+          name: name
+          streetNrLastSuffix: streetNrLastSuffix
+          streetSuffix: streetSuffix
+          geographicSubAddress:
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        '@type': '@type'
+        validGeographicAddress:
+          country: country
+          streetType: streetType
+          geographicLocation:
+            '@referredType': '@referredType'
+            '@baseType': ResourceSpecification
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          city: city
+          streetNr: streetNr
+          '@type': '@type'
+          locality: locality
+          postcode: postcode
+          streetNrLast: streetNrLast
+          streetNrSuffix: streetNrSuffix
+          streetName: streetName
+          stateOrProvince: stateOrProvince
+          '@baseType': '@baseType'
+          name: name
+          streetNrLastSuffix: streetNrLastSuffix
+          streetSuffix: streetSuffix
+          geographicSubAddress:
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        provideAlternative: true
+        submittedGeographicAddress:
+          country: country
+          streetType: streetType
+          geographicLocation:
+            '@referredType': '@referredType'
+            '@baseType': ResourceSpecification
+            '@type': GeoJsonPoint
+            bbox:
+            - 0.8008281904610115
+            - 0.8008281904610115
+            name: name
+            id: id
+            href: href
+            '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          city: city
+          streetNr: streetNr
+          '@type': '@type'
+          locality: locality
+          postcode: postcode
+          streetNrLast: streetNrLast
+          streetNrSuffix: streetNrSuffix
+          streetName: streetName
+          stateOrProvince: stateOrProvince
+          '@baseType': '@baseType'
+          name: name
+          streetNrLastSuffix: streetNrLastSuffix
+          streetSuffix: streetSuffix
+          geographicSubAddress:
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          - subUnitNumber: subUnitNumber
+            '@type': '@type'
+            buildingName: buildingName
+            '@baseType': '@baseType'
+            levelType: levelType
+            subUnitType: subUnitType
+            levelNumber: levelNumber
+            name: name
+            subAddressType: subAddressType
+            id: id
+            href: href
+            privateStreetNumber: privateStreetNumber
+            '@schemaLocation': https://openapi-generator.tech
+            privateStreetName: privateStreetName
+          id: id
+          href: href
+          '@schemaLocation': https://openapi-generator.tech
+        id: id
+        href: href
+        validationDate: 2000-01-23T04:56:07.000+00:00
+        state: null
+        '@schemaLocation': https://openapi-generator.tech
+      properties:
+        id:
+          description: Unique identifier of the Address Validation
+          type: string
+        href:
+          description: An URI used to access to the address validation resource
+          type: string
+        provideAlternative:
+          description: Indicator provided by the requester to specify if alternate
+            addresses must be provided in case of partial or fail result.
+          type: boolean
+        validationDate:
+          description: Date when the address validation is performed
+          format: date-time
+          type: string
+        validationResult:
+          description: "Result of the address validation (success, partial, fails)"
+          type: string
+        alternateGeographicAddress:
+          items:
+            $ref: '#/components/schemas/GeographicAddress'
+          type: array
+        state:
+          $ref: '#/components/schemas/TaskStateType'
+        submittedGeographicAddress:
+          $ref: '#/components/schemas/GeographicAddress'
+        validGeographicAddress:
+          $ref: '#/components/schemas/GeographicAddress'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    GeographicAddressValidation_Create:
+      description: "This resource is used to manage address validation request and\
+        \ response\nSkipped properties: id,href,alternateGeographicAddress,validGeographicAddress,state,validationResult,validationDate"
+      properties:
+        provideAlternative:
+          description: Indicator provided by the requester to specify if alternate
+            addresses must be provided in case of partial or fail result.
+          type: boolean
+        submittedGeographicAddress:
+          $ref: '#/components/schemas/GeographicAddress'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - provideAlternative
+      - submittedGeographicAddress
+      type: object
+    GeographicAddressValidation_Update:
+      description: "This resource is used to manage address validation request and\
+        \ response\nSkipped properties: id,href"
+      properties:
+        provideAlternative:
+          description: Indicator provided by the requester to specify if alternate
+            addresses must be provided in case of partial or fail result.
+          type: boolean
+        validationDate:
+          description: Date when the address validation is performed
+          format: date-time
+          type: string
+        validationResult:
+          description: "Result of the address validation (success, partial, fails)"
+          type: string
+        alternateGeographicAddress:
+          items:
+            $ref: '#/components/schemas/GeographicAddress'
+          type: array
+        state:
+          $ref: '#/components/schemas/TaskStateType'
+        submittedGeographicAddress:
+          $ref: '#/components/schemas/GeographicAddress'
+        validGeographicAddress:
+          $ref: '#/components/schemas/GeographicAddress'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    GeographicLocation:
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute."
+      properties:
+        id:
+          description: Unique identifier of the geographic location
+          type: string
+        href:
+          description: An URI used to access to the geographic location resource
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          enum:
+          - GeoJsonPoint
+          - GeoJsonMultiPoint
+          - GeoJsonLineString
+          - GeoJsonMultiLineString
+          - GeoJsonPolygon
+          type: string
+        bbox:
+          description: A bounding box array that contains the geometry. The axes order
+            follows the axes order of the geometry
+          items:
+            type: number
+          type: array
+      required:
+      - '@type'
+      type: object
+    GeographicLocationRef:
+      properties:
+        id:
+          description: unique identifier
+          type: string
+        href:
+          description: Hyperlink reference
+          type: string
+        name:
+          description: Name of the related entity.
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          example: ResourceSpecification
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          example: https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class Extensible name"
+          example: LogicalResourceSpecification
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - id
+      type: object
+    GeographicLocationRefOrValue:
+      description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+        \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+        \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+        \ tracts of land). Use the @type attribute to specify which of these is being\
+        \ specified by the geometry attribute."
+      example:
+        '@referredType': '@referredType'
+        '@baseType': ResourceSpecification
+        '@type': GeoJsonPoint
+        bbox:
+        - 0.8008281904610115
+        - 0.8008281904610115
+        name: name
+        id: id
+        href: href
+        '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          example: ResourceSpecification
+          type: string
+        bbox:
+          description: A bounding box array that contains the geometry. The axes order
+            follows the axes order of the geometry
+          items:
+            type: number
+          type: array
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          example: https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+          format: uri
+          type: string
+        '@type':
+          description: The name of the GeoJSON structure used in the geometry attribute
+          enum:
+          - GeoJsonPoint
+          - GeoJsonMultiPoint
+          - GeoJsonLineString
+          - GeoJsonMultiLineString
+          - GeoJsonPolygon
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - '@type'
+      type: object
+    GeographicSubAddress:
+      description: "Representation of a GeographicSubAddress \nIt is used for addressing\
+        \ within a property in an urban area (country properties are often defined\
+        \ differently). It may refer to a building, a building cluster, or a floor\
+        \ of a multistory building."
+      example:
+        subUnitNumber: subUnitNumber
+        '@type': '@type'
+        buildingName: buildingName
+        '@baseType': '@baseType'
+        levelType: levelType
+        subUnitType: subUnitType
+        levelNumber: levelNumber
+        name: name
+        subAddressType: subAddressType
+        id: id
+        href: href
+        privateStreetNumber: privateStreetNumber
+        '@schemaLocation': https://openapi-generator.tech
+        privateStreetName: privateStreetName
+      properties:
+        id:
+          description: Unique Identifier of the subAddress
+          type: string
+        href:
+          description: Link to the subAddress
+          type: string
+        buildingName:
+          description: allows for buildings that have well-known names
+          type: string
+        levelNumber:
+          description: "used where a level type may be repeated e.g. BASEMENT 1, BASEMENT\
+            \ 2"
+          type: string
+        levelType:
+          description: describes level types within a building
+          type: string
+        name:
+          description: Name of the subAddress to identify it with a meaningful identification
+          type: string
+        privateStreetName:
+          description: private streets internal to a property (e.g. a university)
+            may have internal names that are not recorded by the land title office.
+          type: string
+        privateStreetNumber:
+          description: private streets numbers internal to a private street
+          type: string
+        subAddressType:
+          description: "Type of subAddress : it can be a subunit or a private street"
+          type: string
+        subUnitNumber:
+          description: "the discriminator used for the subunit\noften just a simple\
+            \ number e.g. FLAT 5, may also be a range"
+          type: string
+        subUnitType:
+          description: "the type of subunit\ne.g.BERTH, FLAT, PIER, SUITE, SHOP, TOWER,\
+            \ UNIT, WHARF"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    Place:
+      description: Place reference. Place defines the places where the products are
+        sold or delivered.
+      properties:
+        id:
+          description: Unique identifier of the place
+          type: string
+        href:
+          description: Unique reference of the place
+          type: string
+        name:
+          description: "A user-friendly name for the place, such as [Paris Store],\
+            \ [London Store], [Main Home]"
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      type: object
+    TaskStateType:
+      description: Possible values for the state of a task
+      enum:
+      - accepted
+      - terminatedWithError
+      - inProgress
+      - done
+      type: string
+    EventSubscription:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+        id: id
+      properties:
+        id:
+          description: Id of the listener
+          type: string
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+      example:
+        query: query
+        callback: callback
+      properties:
+        callback:
+          description: The callback being registered.
+          type: string
+        query:
+          description: additional data to be passed
+          type: string
+      required:
+      - callback
+      type: object
+    GeographicAddressValidationStateChangeEvent:
+      description: The notification data structure
+      example:
+        eventId: eventId
+        domain: domain
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        description: description
+        correlationId: correlationId
+        eventType: eventType
+        event:
+          geographicAddressValidation:
+            validationResult: validationResult
+            '@baseType': '@baseType'
+            alternateGeographicAddress:
+            - country: country
+              streetType: streetType
+              geographicLocation:
+                '@referredType': '@referredType'
+                '@baseType': ResourceSpecification
+                '@type': GeoJsonPoint
+                bbox:
+                - 0.8008281904610115
+                - 0.8008281904610115
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+              city: city
+              streetNr: streetNr
+              '@type': '@type'
+              locality: locality
+              postcode: postcode
+              streetNrLast: streetNrLast
+              streetNrSuffix: streetNrSuffix
+              streetName: streetName
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              name: name
+              streetNrLastSuffix: streetNrLastSuffix
+              streetSuffix: streetSuffix
+              geographicSubAddress:
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            - country: country
+              streetType: streetType
+              geographicLocation:
+                '@referredType': '@referredType'
+                '@baseType': ResourceSpecification
+                '@type': GeoJsonPoint
+                bbox:
+                - 0.8008281904610115
+                - 0.8008281904610115
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+              city: city
+              streetNr: streetNr
+              '@type': '@type'
+              locality: locality
+              postcode: postcode
+              streetNrLast: streetNrLast
+              streetNrSuffix: streetNrSuffix
+              streetName: streetName
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              name: name
+              streetNrLastSuffix: streetNrLastSuffix
+              streetSuffix: streetSuffix
+              geographicSubAddress:
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            '@type': '@type'
+            validGeographicAddress:
+              country: country
+              streetType: streetType
+              geographicLocation:
+                '@referredType': '@referredType'
+                '@baseType': ResourceSpecification
+                '@type': GeoJsonPoint
+                bbox:
+                - 0.8008281904610115
+                - 0.8008281904610115
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+              city: city
+              streetNr: streetNr
+              '@type': '@type'
+              locality: locality
+              postcode: postcode
+              streetNrLast: streetNrLast
+              streetNrSuffix: streetNrSuffix
+              streetName: streetName
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              name: name
+              streetNrLastSuffix: streetNrLastSuffix
+              streetSuffix: streetSuffix
+              geographicSubAddress:
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            provideAlternative: true
+            submittedGeographicAddress:
+              country: country
+              streetType: streetType
+              geographicLocation:
+                '@referredType': '@referredType'
+                '@baseType': ResourceSpecification
+                '@type': GeoJsonPoint
+                bbox:
+                - 0.8008281904610115
+                - 0.8008281904610115
+                name: name
+                id: id
+                href: href
+                '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+              city: city
+              streetNr: streetNr
+              '@type': '@type'
+              locality: locality
+              postcode: postcode
+              streetNrLast: streetNrLast
+              streetNrSuffix: streetNrSuffix
+              streetName: streetName
+              stateOrProvince: stateOrProvince
+              '@baseType': '@baseType'
+              name: name
+              streetNrLastSuffix: streetNrLastSuffix
+              streetSuffix: streetSuffix
+              geographicSubAddress:
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              - subUnitNumber: subUnitNumber
+                '@type': '@type'
+                buildingName: buildingName
+                '@baseType': '@baseType'
+                levelType: levelType
+                subUnitType: subUnitType
+                levelNumber: levelNumber
+                name: name
+                subAddressType: subAddressType
+                id: id
+                href: href
+                privateStreetNumber: privateStreetNumber
+                '@schemaLocation': https://openapi-generator.tech
+                privateStreetName: privateStreetName
+              id: id
+              href: href
+              '@schemaLocation': https://openapi-generator.tech
+            id: id
+            href: href
+            validationDate: 2000-01-23T04:56:07.000+00:00
+            state: null
+            '@schemaLocation': https://openapi-generator.tech
+        title: title
+        priority: priority
+        timeOcurred: 2000-01-23T04:56:07.000+00:00
+      properties:
+        event:
+          $ref: '#/components/schemas/GeographicAddressValidationStateChangeEventPayload'
+        eventId:
+          description: The identifier of the notification.
+          type: string
+        eventTime:
+          description: Time of the event occurrence.
+          format: date-time
+          type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        correlationId:
+          description: The correlation id for this event.
+          type: string
+        domain:
+          description: The domain of the event.
+          type: string
+        title:
+          description: The title of the event.
+          type: string
+        description:
+          description: An explnatory of the event.
+          type: string
+        priority:
+          description: A priority.
+          type: string
+        timeOcurred:
+          description: The time the event occured.
+          format: date-time
+          type: string
+      type: object
+    GeographicAddressValidationStateChangeEventPayload:
+      description: The event data structure
+      example:
+        geographicAddressValidation:
+          validationResult: validationResult
+          '@baseType': '@baseType'
+          alternateGeographicAddress:
+          - country: country
+            streetType: streetType
+            geographicLocation:
+              '@referredType': '@referredType'
+              '@baseType': ResourceSpecification
+              '@type': GeoJsonPoint
+              bbox:
+              - 0.8008281904610115
+              - 0.8008281904610115
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+            city: city
+            streetNr: streetNr
+            '@type': '@type'
+            locality: locality
+            postcode: postcode
+            streetNrLast: streetNrLast
+            streetNrSuffix: streetNrSuffix
+            streetName: streetName
+            stateOrProvince: stateOrProvince
+            '@baseType': '@baseType'
+            name: name
+            streetNrLastSuffix: streetNrLastSuffix
+            streetSuffix: streetSuffix
+            geographicSubAddress:
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          - country: country
+            streetType: streetType
+            geographicLocation:
+              '@referredType': '@referredType'
+              '@baseType': ResourceSpecification
+              '@type': GeoJsonPoint
+              bbox:
+              - 0.8008281904610115
+              - 0.8008281904610115
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+            city: city
+            streetNr: streetNr
+            '@type': '@type'
+            locality: locality
+            postcode: postcode
+            streetNrLast: streetNrLast
+            streetNrSuffix: streetNrSuffix
+            streetName: streetName
+            stateOrProvince: stateOrProvince
+            '@baseType': '@baseType'
+            name: name
+            streetNrLastSuffix: streetNrLastSuffix
+            streetSuffix: streetSuffix
+            geographicSubAddress:
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          '@type': '@type'
+          validGeographicAddress:
+            country: country
+            streetType: streetType
+            geographicLocation:
+              '@referredType': '@referredType'
+              '@baseType': ResourceSpecification
+              '@type': GeoJsonPoint
+              bbox:
+              - 0.8008281904610115
+              - 0.8008281904610115
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+            city: city
+            streetNr: streetNr
+            '@type': '@type'
+            locality: locality
+            postcode: postcode
+            streetNrLast: streetNrLast
+            streetNrSuffix: streetNrSuffix
+            streetName: streetName
+            stateOrProvince: stateOrProvince
+            '@baseType': '@baseType'
+            name: name
+            streetNrLastSuffix: streetNrLastSuffix
+            streetSuffix: streetSuffix
+            geographicSubAddress:
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          provideAlternative: true
+          submittedGeographicAddress:
+            country: country
+            streetType: streetType
+            geographicLocation:
+              '@referredType': '@referredType'
+              '@baseType': ResourceSpecification
+              '@type': GeoJsonPoint
+              bbox:
+              - 0.8008281904610115
+              - 0.8008281904610115
+              name: name
+              id: id
+              href: href
+              '@schemaLocation': https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json
+            city: city
+            streetNr: streetNr
+            '@type': '@type'
+            locality: locality
+            postcode: postcode
+            streetNrLast: streetNrLast
+            streetNrSuffix: streetNrSuffix
+            streetName: streetName
+            stateOrProvince: stateOrProvince
+            '@baseType': '@baseType'
+            name: name
+            streetNrLastSuffix: streetNrLastSuffix
+            streetSuffix: streetSuffix
+            geographicSubAddress:
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            - subUnitNumber: subUnitNumber
+              '@type': '@type'
+              buildingName: buildingName
+              '@baseType': '@baseType'
+              levelType: levelType
+              subUnitType: subUnitType
+              levelNumber: levelNumber
+              name: name
+              subAddressType: subAddressType
+              id: id
+              href: href
+              privateStreetNumber: privateStreetNumber
+              '@schemaLocation': https://openapi-generator.tech
+              privateStreetName: privateStreetName
+            id: id
+            href: href
+            '@schemaLocation': https://openapi-generator.tech
+          id: id
+          href: href
+          validationDate: 2000-01-23T04:56:07.000+00:00
+          state: null
+          '@schemaLocation': https://openapi-generator.tech
+      properties:
+        geographicAddressValidation:
+          $ref: '#/components/schemas/GeographicAddressValidation'
+      type: object
+    GeoJsonLineString:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonLineString_allOf'
+      description: "Container for GeoJson LineString: A collection of Points forming\
+        \ a connected line"
+    GeoJsonMultiLineString:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonMultiLineString_allOf'
+      description: "A container for GeoJSON MultiLineString: A collection of distinct\
+        \ LineStrings"
+    GeoJsonMultiPoint:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonMultiPoint_allOf'
+      description: "Container for GeoJSON MultiPoint: A collection of Points"
+    GeoJsonPoint:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonPoint_allOf'
+      description: "Container for a GeoJSON Point: A single position"
+    GeoJsonPolygon:
+      allOf:
+      - $ref: '#/components/schemas/GeographicLocation'
+      - $ref: '#/components/schemas/GeoJsonPolygon_allOf'
+      description: "Container for GeoJSON Polygon: An array of linear rings"
+    LineString:
+      description: "GeoJSON: A collection of Points forming a connected line"
+      properties:
+        coordinates:
+          $ref: '#/components/schemas/lineString'
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      type: object
+    MultiLineString:
+      description: A collection of distinct LineStrings
+      properties:
+        type:
+          type: string
+        coordinates:
+          items:
+            $ref: '#/components/schemas/lineString'
+          minItems: 1
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    MultiPoint:
+      description: A collection of Points
+      properties:
+        type:
+          type: string
+        coordinates:
+          description: "GeoJSON: An array of positions"
+          items:
+            $ref: '#/components/schemas/position'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    Point:
+      description: "GeoJSON: A single position"
+      properties:
+        type:
+          type: string
+        coordinates:
+          description: "GeoJSON: A single position"
+          items:
+            type: number
+          maxItems: 2
+          minItems: 2
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    Polygon:
+      description: An array of linear rings
+      properties:
+        type:
+          type: string
+        coordinates:
+          description: "GeoJSON: An array of linear rings"
+          items:
+            $ref: '#/components/schemas/linearRing'
+          type: array
+        '@baseType':
+          description: "When sub-classing, this defines the super-class"
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name"
+          type: string
+      required:
+      - coordinates
+      - type
+      type: object
+    position:
+      description: "GeoJSON: A single position"
+      items:
+        type: number
+      maxItems: 2
+      minItems: 2
+      type: array
+    positionArray:
+      description: "GeoJSON: An array of positions"
+      items:
+        $ref: '#/components/schemas/position'
+      type: array
+    lineString:
+      allOf:
+      - $ref: '#/components/schemas/positionArray'
+      - type: object
+      description: "GeoJSON: An array of two or more positions"
+    linearRing:
+      allOf:
+      - $ref: '#/components/schemas/positionArray'
+      - type: object
+      description: "GeoJSON: An array of four positions where the first equals the\
+        \ last"
+    polygon:
+      description: "GeoJSON: An array of linear rings"
+      items:
+        $ref: '#/components/schemas/linearRing'
+      type: array
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \ response-code (3xx, 4xx, 5xx)"
+      properties:
+        code:
+          description: "Application relevant detail, defined in the API or a common\
+            \ list."
+          type: string
+        reason:
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+          type: string
+        message:
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+          type: string
+        status:
+          description: HTTP Error code extension
+          type: string
+        referenceError:
+          description: URI of documentation describing the error.
+          format: uri
+          type: string
+        '@baseType':
+          description: "When sub-classing, this defines the super-class."
+          type: string
+        '@schemaLocation':
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+          type: string
+        '@type':
+          description: "When sub-classing, this defines the sub-class entity name."
+          type: string
+      required:
+      - code
+      - reason
+      type: object
+    GeoJsonLineString_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/LineString'
+      type: object
+    GeoJsonMultiLineString_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/MultiLineString'
+      type: object
+    GeoJsonMultiPoint_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/MultiPoint'
+      type: object
+    GeoJsonPoint_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/Point'
+      type: object
+    GeoJsonPolygon_allOf:
+      properties:
+        geoJson:
+          $ref: '#/components/schemas/Polygon'
+      type: object
+x-original-swagger-version: "2.0"
