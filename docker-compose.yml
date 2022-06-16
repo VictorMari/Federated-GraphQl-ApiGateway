@@ -1,173 +1,173 @@
 services:
   tmf620:
     build: apis/620
-    image: localhost:5000/tmf620:4.0.0
+    image: localhost:32000/tmf620:4.0.0
   tmf621:
     build: apis/621
-    image: localhost:5000/tmf621:4.0.0
+    image: localhost:32000/tmf621:4.0.0
   tmf622:
     build: apis/622
-    image: localhost:5000/tmf622:4.0.0
+    image: localhost:32000/tmf622:4.0.0
   tmf629:
     build: apis/629
-    image: localhost:5000/tmf629:4.0.0
+    image: localhost:32000/tmf629:4.0.0
   tmf632:
     build: apis/632
-    image: localhost:5000/tmf632:4.0.0
+    image: localhost:32000/tmf632:4.0.0
   tmf633:
     build: apis/633
-    image: localhost:5000/tmf633:4.0.0
+    image: localhost:32000/tmf633:4.0.0
   tmf634:
     build: apis/634
-    image: localhost:5000/tmf634:4.0.0
+    image: localhost:32000/tmf634:4.0.0
   tmf635:
     build: apis/635
-    image: localhost:5000/tmf635:4.0.0
+    image: localhost:32000/tmf635:4.0.0
   tmf637:
     build: apis/637
-    image: localhost:5000/tmf637:4.0.0
+    image: localhost:32000/tmf637:4.0.0
   tmf638:
     build: apis/638
-    image: localhost:5000/tmf638:4.0.0
+    image: localhost:32000/tmf638:4.0.0
   tmf639:
     build: apis/639
-    image: localhost:5000/tmf639:4.0.0
+    image: localhost:32000/tmf639:4.0.0
   tmf640:
     build: apis/640
-    image: localhost:5000/tmf640:4.0.0
+    image: localhost:32000/tmf640:4.0.0
   tmf641:
     build: apis/641
-    image: localhost:5000/tmf641:4.0.0
+    image: localhost:32000/tmf641:4.0.0
   tmf642:
     build: apis/642
-    image: localhost:5000/tmf642:4.0.0
+    image: localhost:32000/tmf642:4.0.0
   tmf645:
     build: apis/645
-    image: localhost:5000/tmf645:4.0.0
+    image: localhost:32000/tmf645:4.0.0
   tmf646:
     build: apis/646
-    image: localhost:5000/tmf646:4.0.0
+    image: localhost:32000/tmf646:4.0.0
   tmf648:
     build: apis/648
-    image: localhost:5000/tmf648:4.0.0
+    image: localhost:32000/tmf648:4.0.0
   tmf651:
     build: apis/651
-    image: localhost:5000/tmf651:4.0.0
+    image: localhost:32000/tmf651:4.0.0
   tmf652:
     build: apis/652
-    image: localhost:5000/tmf652:4.0.0
+    image: localhost:32000/tmf652:4.0.0
   tmf653:
     build: apis/653
-    image: localhost:5000/tmf653:4.0.0
+    image: localhost:32000/tmf653:4.0.0
   tmf654:
     build: apis/654
-    image: localhost:5000/tmf654:4.0.0
+    image: localhost:32000/tmf654:4.0.0
   tmf655:
     build: apis/655
-    image: localhost:5000/tmf655:4.0.0
+    image: localhost:32000/tmf655:4.0.0
   tmf656:
     build: apis/656
-    image: localhost:5000/tmf656:4.0.0
+    image: localhost:32000/tmf656:4.0.0
   tmf657:
     build: apis/657
-    image: localhost:5000/tmf657:4.0.0
+    image: localhost:32000/tmf657:4.0.0
   tmf662:
     build: apis/662
-    image: localhost:5000/tmf662:4.0.0
+    image: localhost:32000/tmf662:4.0.0
   tmf663:
     build: apis/663
-    image: localhost:5000/tmf663:4.0.0
+    image: localhost:32000/tmf663:4.0.0
   tmf664:
     build: apis/664
-    image: localhost:5000/tmf664:4.0.0
+    image: localhost:32000/tmf664:4.0.0
   tmf666:
     build: apis/666
-    image: localhost:5000/tmf666:4.0.0
+    image: localhost:32000/tmf666:4.0.0
   tmf668:
     build: apis/668
-    image: localhost:5000/tmf668:4.0.0
+    image: localhost:32000/tmf668:4.0.0
   tmf669:
     build: apis/669
-    image: localhost:5000/tmf669:4.0.0
+    image: localhost:32000/tmf669:4.0.0
   tmf670:
     build: apis/670
-    image: localhost:5000/tmf670:4.0.0
+    image: localhost:32000/tmf670:4.0.0
   tmf671:
     build: apis/671
-    image: localhost:5000/tmf671:4.0.0
+    image: localhost:32000/tmf671:4.0.0
   tmf672:
     build: apis/672
-    image: localhost:5000/tmf672:4.0.0
+    image: localhost:32000/tmf672:4.0.0
   tmf673:
     build: apis/673
-    image: localhost:5000/tmf673:4.0.0
+    image: localhost:32000/tmf673:4.0.0
   tmf674:
     build: apis/674
-    image: localhost:5000/tmf674:4.0.0
+    image: localhost:32000/tmf674:4.0.0
   tmf675:
     build: apis/675
-    image: localhost:5000/tmf675:4.0.0
+    image: localhost:32000/tmf675:4.0.0
   tmf676:
     build: apis/676
-    image: localhost:5000/tmf676:4.0.0
+    image: localhost:32000/tmf676:4.0.0
   tmf677:
     build: apis/677
-    image: localhost:5000/tmf677:4.0.0
+    image: localhost:32000/tmf677:4.0.0
   tmf678:
     build: apis/678
-    image: localhost:5000/tmf678:4.0.0
+    image: localhost:32000/tmf678:4.0.0
   tmf679:
     build: apis/679
-    image: localhost:5000/tmf679:4.0.0
+    image: localhost:32000/tmf679:4.0.0
   tmf680:
     build: apis/680
-    image: localhost:5000/tmf680:4.0.0
+    image: localhost:32000/tmf680:4.0.0
   tmf681:
     build: apis/681
-    image: localhost:5000/tmf681:4.0.0
+    image: localhost:32000/tmf681:4.0.0
   tmf683:
     build: apis/683
-    image: localhost:5000/tmf683:4.0.0
+    image: localhost:32000/tmf683:4.0.0
   tmf687:
     build: apis/687
-    image: localhost:5000/tmf687:4.0.0
+    image: localhost:32000/tmf687:4.0.0
   tmf691:
     build: apis/691
-    image: localhost:5000/tmf691:4.0.0
+    image: localhost:32000/tmf691:4.0.0
   tmf696:
     build: apis/696
-    image: localhost:5000/tmf696:4.0.0
+    image: localhost:32000/tmf696:4.0.0
   tmf699:
     build: apis/699
-    image: localhost:5000/tmf699:4.0.0
+    image: localhost:32000/tmf699:4.0.0
   tmf701:
     build: apis/701
-    image: localhost:5000/tmf701:4.0.0
+    image: localhost:32000/tmf701:4.0.0
   tmf704:
     build: apis/704
-    image: localhost:5000/tmf704:4.0.0
+    image: localhost:32000/tmf704:4.0.0
   tmf705:
     build: apis/705
-    image: localhost:5000/tmf705:4.0.0
+    image: localhost:32000/tmf705:4.0.0
   tmf706:
     build: apis/706
-    image: localhost:5000/tmf706:4.0.0
+    image: localhost:32000/tmf706:4.0.0
   tmf707:
     build: apis/707
-    image: localhost:5000/tmf707:4.0.0
+    image: localhost:32000/tmf707:4.0.0
   tmf708:
     build: apis/708
-    image: localhost:5000/tmf708:4.0.0
+    image: localhost:32000/tmf708:4.0.0
   tmf709:
     build: apis/709
-    image: localhost:5000/tmf709:4.0.0
+    image: localhost:32000/tmf709:4.0.0
   tmf710:
     build: apis/710
-    image: localhost:5000/tmf710:4.0.0
+    image: localhost:32000/tmf710:4.0.0
   tmf720:
     build: apis/720
-    image: localhost:5000/tmf720:4.0.0
+    image: localhost:32000/tmf720:4.0.0
   tmf915:
     build: apis/915
-    image: localhost:5000/tmf915:4.0.0
+    image: localhost:32000/tmf915:4.0.0
 version: '3.9'

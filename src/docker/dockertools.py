@@ -12,7 +12,7 @@ def load_api(docker_path):
     return {
         "tmf"+api_number: {
             "build": str(docker_path.parent),
-            "image": "localhost:5000/tmf"+api_number+ ":4.0.0",
+            "image": "localhost:32000/tmf"+api_number+ ":4.0.0",
         }
     }
 
